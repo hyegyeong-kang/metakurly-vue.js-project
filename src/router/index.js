@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from "vue-router";
 import Home from '../pages/index.vue';
 import Orders from '../pages/orders/index.vue';
 import OrdersList from '../pages/orders/list/index.vue';
+import OrderSuccess from '../pages/orders/success.vue';
 // import OrdersDetail from '../pages/orders/detail/o_id.vue';
 
 const router = createRouter({
@@ -16,6 +17,11 @@ const router = createRouter({
             path: '/orders',
             name: 'Orders',
             component: Orders
+        },
+        {
+            path: '/orders/success',
+            name: 'OrderSuccess',
+            component: OrderSuccess
         },
         {
             path: '/orders/list',
