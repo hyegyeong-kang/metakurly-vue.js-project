@@ -53,7 +53,7 @@
                                   <input type="button" class="plus_btn" value="+" @click="plusBtn">
                                 <span class="total_p">
                                   <strong class="price_amount"><span>{{ cart.price * cart.quantity }}</span></strong>원
-                                  <span class="del_li_btn"><img src="https://tictoc-web.s3.ap-northeast-2.amazonaws.com/web/img/icon/btn_del_circle.svg"></span>
+                                  <span type="button" @click="deleteBtn" class="del_li_btn"><img src="https://tictoc-web.s3.ap-northeast-2.amazonaws.com/web/img/icon/btn_del_circle.svg"></span>
                                 </span>
                               </div>
   
@@ -124,6 +124,20 @@
         {p_id: 2, brand: '스윗밸런스', price: 5900, name: '오늘의 샐러드', stock: 1000, delivery_type: '깜깜배송', sales_amount: 5152, img_url: 'https://img-cf.kurly.com/cdn-cgi/image/quality=85,width=676/shop/data/goods/1655775819130l0.jpg'}
       ]);
   
+      const minusBtn = () => {
+  
+      };
+  
+      const plusBtn = () => {
+  
+      };
+  
+      const deleteBtn = () => {
+  
+      };
+  
+      
+  
     
   
       return {
@@ -131,6 +145,9 @@
         count,
         carts,
         products,
+        minusBtn,
+        plusBtn,
+        deleteBtn,
       };
     },
   };
