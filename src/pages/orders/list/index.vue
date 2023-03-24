@@ -15,10 +15,10 @@
 						  <div class="meta">
 							  {{order.status}}
 			        </div>
-						  <h6 class="post-title"><router-link :to="{path: '/products/' + order.p_id}">{{order.brand}} {{order.name}}</router-link></h6>
+						  <h6 class="post-title"><router-link :to="{path: '/orders/' + order.id}">{{order.brand}} {{order.name}}</router-link></h6>
 						  <div class="meta">
 							<!-- <a href="#"><span class="mai-person"></span> Admin</a> -->
-							  <a href='#'>주문번호 {{order.o_id}}</a>
+							  <a href='#'>주문번호 {{order.id}}</a>
 							  <span class="mai-calendar">{{order.orders_date}}</span>
 							<!-- <a href="#"><span class="mai-chatbubbles"></span> 19</a> -->
 			        </div>
