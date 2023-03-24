@@ -29,7 +29,7 @@
                           <!--상품 개별 설명-->
                           <div class="item_detail">
                               <tr>
-                                  <td class="item_detail">
+                                  <td class="td_width cart_info_td">
                                       <!--상품 개당 가격,  상품 갯수, 상품 갯수에 맞는 가격 -->
                                       <!-- <input class="productPrice" type="hidden"><span>{{ cart.price }}</span>
                                       <input class="productQuantitiy" type="hidden"><span>{{ cart.quantity }}</span> -->
@@ -41,7 +41,7 @@
                               </tr>
                               <!--상품 이미지, 상품 이름-->
                               <img class="cart-img" :src="cart.img_url">
-                              <div class="productName"><span>{{ cart.name }}</span></div>
+                              <p class="productName"><span>{{ cart.name }}</span></p>
                           </div>
                           <!--상품 갯수 변경하는 버튼과 상품 갯수에 따른 가격 변동-->
                           <div class="opt_info">
@@ -51,12 +51,13 @@
                                   <input type="button" class="minus_btn" value="-" @click="minusBtn">
                                   <input type="text" class="product_count">
                                   <input type="button" class="plus_btn" value="+" @click="plusBtn">
+                                <span class="total_p">
+                                  <strong class="price_amount"><span>{{ cart.price * cart.quantity }}</span></strong>원
+                                  <span class="del_li_btn"><img src="https://tictoc-web.s3.ap-northeast-2.amazonaws.com/web/img/icon/btn_del_circle.svg"></span>
+                                </span>
                               </div>
   
-                              <div class="total_p">
-                                <strong class="price_amount"><span>{{ cart.price * cart.quantity }}</span></strong>원
-                                <span class="del_li_btn"><img src="https://tictoc-web.s3.ap-northeast-2.amazonaws.com/web/img/icon/btn_del_circle.svg"></span>
-                              </div>
+                              
                           </div>
                       </li>
                   </div> <!-- for 문 끝남 -->
@@ -209,6 +210,7 @@
       no-repeat center;
   }
   .cart_table .cart_list li > div.opt_info .price_btn span.number {
+    padding-bottom: 20px;
     font-size: 25px;
     background: #f5f5f5;
     color: #666;
@@ -216,23 +218,29 @@
   }
   .cart_table .cart_list li > div.opt_info > div.price_unit div.price {
     display: inline-block;
+    padding-bottom: 20px;
   }
-  .cart_table .cart_list li > div.opt_info > div.total_p {
+  .cart_table .cart_list li > div.opt_info > div.price_btn > span.total_p {
     font-size: 22px;
-    float: right;
+    /* float: right; */
+    margin-left: 20px;
+    padding-bottom: 20px;
   }
-  .cart_table .cart_list li > div.opt_info > div.total_p strong {
+  .cart_table .cart_list li > div.opt_info > div.price_btn > span.total_p strong {
     vertical-align: sub;
-    margin-right: 6px;
+    margin-right: 30px;
     font-size: 25px;
+    padding-bottom: 20px;
   }
-  .cart_table .cart_list li > div.opt_info > div.total_p span {
+  .cart_table .cart_list li > div.opt_info > div.price_btn > span.total_p span {
     width: 30px;
     display: inline-block;
+    padding-bottom: 20px;
   }
   .cart_table .cart_list li > div.item_detail {
     width: 60%;
   }
+  
   .cart_table .cart_list li > div.item_detail img {
     max-width: 150px;
     width: 25%;
