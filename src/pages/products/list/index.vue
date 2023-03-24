@@ -7,10 +7,10 @@
               <nav aria-label="Breadcrumb">
                 <ul class="breadcrumb justify-content-center py-0 bg-transparent">
                   <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                  <li class="breadcrumb-item active">Best 100</li>
+                  <li class="breadcrumb-item active">All Products</li>
                 </ul>
               </nav>
-              <h1 class="text-center">Best Products</h1>
+              <h1 class="text-center">All Products</h1>
             </div>
           </div>
         </div>

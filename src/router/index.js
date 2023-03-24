@@ -40,7 +40,7 @@ const router = createRouter({
             component: BestList
         },
         {
-            path: '/products/list',
+            path: '/products',
             name: 'ProductList',
             component: ProductList
         },
