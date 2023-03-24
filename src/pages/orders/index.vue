@@ -1,20 +1,20 @@
 <template>
   <div class="page-section">
       <div class="container">
-      	<!--중단 상품리스트 -->
-	      <div style="margin: 0; padding: 0; border: 0; box-sizing: border-box; font-family: '맑은고딕', 'Malgun Gothic', 'dotum', sans-serif; letter-spacing: -1px; padding: 11px 0 0; color: #7B68EE; font-size: 32px; line-height: 41px; letter-spacing: -2px;">
+        <!--중단 상품리스트 -->
+        <div style="margin: 0; padding: 0; border: 0; box-sizing: border-box; font-family: '맑은고딕', 'Malgun Gothic', 'dotum', sans-serif; letter-spacing: -1px; padding: 11px 0 0; color: #7B68EE; font-size: 32px; line-height: 41px; letter-spacing: -2px;">
           주문하기
         </div>
-			</div>
-	</div>
+      </div>
+  </div>
 
-	<div class="contents">
-		<div style="margin: 0; padding: 0; border: 0; box-sizing: border-box; font-family: '맑은고딕', 'Malgun Gothic', 'dotum', sans-serif; letter-spacing: -1px; word-spacing: -2px; margin: 0 20px; padding: 25px 0 9px; border-bottom: 2px solid #666; color: #333; font-size: 16px; font-weight: bold;">
+  <div class="contents">
+    <div style="margin: 0; padding: 0; border: 0; box-sizing: border-box; font-family: '맑은고딕', 'Malgun Gothic', 'dotum', sans-serif; letter-spacing: -1px; word-spacing: -2px; margin: 0 20px; padding: 25px 0 9px; border-bottom: 2px solid #666; color: #333; font-size: 16px; font-weight: bold;">
       주문자 정보
     </div>
-		<div style="margin: 0; padding: 0; border: 0; box-sizing: border-box; font-size: 14px; line-height: 22px; font-family: '맑은고딕', 'Malgun Gothic', 'dotum', sans-serif; letter-spacing: -1px; padding: 0 20px;">
-			<table style="border-collapse: collapse; margin: 0; padding: 0; border: 0; box-sizing: border-box; font-size: 0; line-height: 0; font-family: '맑은고딕', 'Malgun Gothic', 'dotum', sans-serif; letter-spacing: -1px; border-spacing: 0; border-collapse: collapse; table-layout: fixed; width: 100%;">
-				<caption style="visibility: hidden; width: 0; height: 0; font-size: 0; line-height: 0;"></caption>
+    <div style="margin: 0; padding: 0; border: 0; box-sizing: border-box; font-size: 14px; line-height: 22px; font-family: '맑은고딕', 'Malgun Gothic', 'dotum', sans-serif; letter-spacing: -1px; padding: 0 20px;">
+      <table style="border-collapse: collapse; margin: 0; padding: 0; border: 0; box-sizing: border-box; font-size: 0; line-height: 0; font-family: '맑은고딕', 'Malgun Gothic', 'dotum', sans-serif; letter-spacing: -1px; border-spacing: 0; border-collapse: collapse; table-layout: fixed; width: 100%;">
+        <caption style="visibility: hidden; width: 0; height: 0; font-size: 0; line-height: 0;"></caption>
         <colgroup>
           <col style="margin: 0; padding: 0; border: 0; box-sizing: border-box; width: 120px;">
           <col style="margin: 0; padding: 0; border: 0; box-sizing: border-box; width: *;">
@@ -68,7 +68,7 @@
           </tr>
         </tbody>
       </table>
-		</div>
+    </div>
 
     <div
       style="margin: 0; padding: 0; border: 0; box-sizing: border-box; font-family: '맑은고딕', 'Malgun Gothic', 'dotum', sans-serif; letter-spacing: -1px; word-spacing: -2px; margin: 0 20px; padding: 25px 0 9px; border-bottom: 2px solid #666; color: #333; font-size: 16px; font-weight: bold;">
