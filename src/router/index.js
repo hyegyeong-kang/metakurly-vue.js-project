@@ -2,8 +2,8 @@ import { createRouter, createWebHistory } from "vue-router";
 import Home from '../pages/index.vue';
 import Orders from '../pages/orders/index.vue';
 import OrdersList from '../pages/orders/list/index.vue';
-import OrderSuccess from '../pages/orders/success.vue';
-// import OrdersDetail from '../pages/orders/detail/o_id.vue';
+import OrderSuccess from '../pages/orders/success/index.vue';
+import OrdersDetail from '../pages/orders/_id.vue';
 
 const router = createRouter({
     history: createWebHistory(),
@@ -27,13 +27,12 @@ const router = createRouter({
             path: '/orders/list',
             name: 'OrdersList',
             component: OrdersList
+        },
+        {
+            path: '/orders/:id',
+            name: 'OrdersDetail',
+            component: OrdersDetail
         }
-        // ,
-        // {
-        //     path: '/orders/detail/:id',
-        //     name: 'OrdersDetail',
-        //     component: OrdersDetail
-        // }
     ]
 });
 
@@ -42,4 +41,4 @@ export default router;
 //  /
 //  /orders
 //  /orders/list
-//  /orders/detail/:o_id
+//  /orders/detail/:id

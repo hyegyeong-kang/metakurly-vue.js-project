@@ -81,14 +81,13 @@
 
 
 		<div style="overflow: hidden; margin: 0 20px;"
-			v-for="product in products" :key="product.id">
-			<div v-for="detail in order_details" :key="order_details.p_id">
+			v-for="detail in orderDetails" :key="detail.productDTO.id">
 			<router-link target="_blank"
 				style="float: left; :70 px; :70 px; margin: 20px 0;"
-				:to="`/products/` + product.id" id="productImg">
+				:to="`/products/` + detail.productDTO.id" id="productImg">
 				<img
 					style="border: 0; width: 70px; height: 70px;"
-					:src='`https://img-cf.kurly.com/shop/data/goods/${product.img_url}`'
+					:src='`https://img-cf.kurly.com/shop/data/goods/${detail.productDTO.img_url}`'
 					alt="">
 			</router-link>
 
@@ -96,8 +95,8 @@
 				style="float: left; width: 68%; margin: 0 0 0 15px; padding: 17px 0 15px;">
 				<router-link target="_blank"
 					style="color: #333; font-size: 15px; line-: 18px; display: block; text-decoration: none; overflow: hidden; text-overflow: ellipsis; display: -webkit-box; :36 px; -webkit-box-orient: vertical; -webkit-line-clamp: 2; font-family: '맑은고딕', 'malgun gothic', 'dotum', sans-serif;"
-					:to="`/products/` + product.id">
-					{{product.brand}}<br>{{product.name}}
+					:to="`/products/` + detail.productDTO.id">
+					{{detail.productDTO.brand}}<br>{{detail.productDTO.name}}
 				</router-link>
 				<div
 					style="color: #999; font-size: 12px; line-height: 16px; font-weight: bold;">
@@ -110,7 +109,7 @@
 
 					<span
 						style="color: #333; font-size: 20px; font-weight: bold; padding: 0 0 0 7px;">
-						{{product.price * detail.quantity}}
+						{{detail.productDTO.price * detail.quantity}}
 						<em
 							style="display: inline-block; color: #b0b0b0; font-style: normal; font-size: 12px; vertical-align: 1px; color: #333 !important; padding: 0 0 0 2px; vertical-align: 2px !important;">
 							원
@@ -118,7 +117,6 @@
 					</span>
 					
 				</div>
-			</div>
 			</div>
 		</div>
 		
@@ -296,8 +294,8 @@ export default {
 		const order = ref(
 			{id: 1, orders_date: '2023-02-22', status: '배송완료', total_amount: 2, price: 11800, m_id: 1}
 		);
-		const order_details = ref([
-			{o_id: 1, p_id: 1, quantity: 2, m_id: 1}
+		const orderDetails = ref([
+			{o_id: 1, quantity: 2, productDTO: {id: 1, brand: '스윗밸런스', price: 5900, name: '오늘의 샐러드', img_url: '1655775819130l0.jpg', quantity: 2}}
 		]);
 		const payment = ref(
 			{id: 1, o_id: 1, m_id: 1, method: '카드', payment_amount: 11800}
@@ -308,9 +306,8 @@ export default {
 
 		return{
 			member,
-			products,
 			order,
-			order_details,
+			orderDetails,
 			payment,
 			usePoint,
 			totalPrice,

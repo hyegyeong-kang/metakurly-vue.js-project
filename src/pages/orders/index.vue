@@ -78,33 +78,33 @@
       </div>
         
       <div style="overflow: hidden; margin: 0 20px;"
-        v-for="product in products" :key="product.id">
-        <router-link target="_blank"
+        v-for="detail in orderDetails" :key="detail.productDTO.id">
+        <router-link
           style="float: left; :70 px; :70 px; margin: 20px 0;"
-          :to="`/products/` + product.id" id="productImg">
+          :to="`/products/` + detail.productDTO.id" id="productImg">
           <img
             style="border: 0; width: 70px; height: 70px;"
-            :src='`https://img-cf.kurly.com/shop/data/goods/${product.img_url}`'
+            :src='`${detail.productDTO.img_url}`'
             alt="">
         </router-link>
         <div
           style="float: left; width: 68%; margin: 0 0 0 15px; padding: 17px 0 15px;">
-          <router-link target="_blank"
+          <router-link
             style="color: #333; font-size: 15px; line-: 18px; display: block; text-decoration: none; overflow: hidden; text-overflow: ellipsis; display: -webkit-box; :36 px; -webkit-box-orient: vertical; -webkit-line-clamp: 2; font-family: '맑은고딕', 'malgun gothic', 'dotum', sans-serif;"
-            :to="`/products/` + product.id">
-            {{product.brand}}<br>{{product.name}}
+            :to="`/products/` + detail.productDTO.id">
+            {{detail.productDTO.brand}}<br>{{detail.productDTO.name}}
           </router-link>
           <div
             style="color: #999; font-size: 12px; line-height: 16px; font-weight: bold;">
           </div>
           <div
             style="color: #999; font-size: 12px; line-height: 16px; font-weight: bold;">
-            구매수량 : {{product.quantity}} 개
+            구매수량 : {{detail.quantity}} 개
           </div>
           <div style="padding: 4px 0 0;">
             <span
               style="color: #333; font-size: 20px; font-weight: bold; padding: 0 0 0 7px;">
-              {{product.price * product.quantity}}
+              {{detail.productDTO.price * detail.quantity}}
               <em
               style="display: inline-block; color: #b0b0b0; font-style: normal; font-size: 12px; vertical-align: 1px; color: #333 !important; padding: 0 0 0 2px; vertical-align: 2px !important;">
                 원
@@ -112,7 +112,7 @@
             </span>
           </div>
         </div>
-        <input type="hidden" name="total_amount" value="{{product.quantity}}"/>
+        <input type="hidden" name="total_amount" value="{{detail.quantity}}"/>
         <input type="hidden" name="price" value="{{totalPrice}}"/>
       </div>
 
@@ -231,11 +231,12 @@ export default {
     const member = ref(
       {id: 1, name: '홍길동', email: 'kosa@metanet.com', phone: '010-1234-5678', address: '서울', point: 20000}
     );
-    const products = ref([
-      {id: 1, brand: '스윗밸런스', price: 5900, name: '오늘의 샐러드', img_url: '1655775819130l0.jpg', quantity: 2}
+    const orderDetails = ref([
+      {id: 1, quantity: 2, 
+        productDTO: {id: 1, brand: '스윗밸런스', price: 5900, name: '오늘의 샐러드', img_url: 'https://img-cf.kurly.com/shop/data/goods/1655775819130l0.jpg'}}
     ]);
     const usePoint = ref(0);
-    const totalPrice = ref(products.value[0].price * products.value[0].quantity);
+    const totalPrice = ref(orderDetails.value[0].productDTO.price * orderDetails.value[0].quantity);
     const paymentAmount = ref(totalPrice.value - usePoint.value);
     const toggleErrorMsg = ref(false);
     const togglePayMethod = ref('');
@@ -278,7 +279,7 @@ export default {
 
     return {
       member,
-      products,
+      orderDetails,
       usePoint,
       totalPrice,
       paymentAmount,
