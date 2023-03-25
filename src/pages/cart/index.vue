@@ -11,7 +11,7 @@
                   <!--맨 위 전체선태그 삭제 버튼-->
                   <li>
                         <div class="checkbox">
-                            <input type="checkbox" name="all_chk" id="all_chk">
+                            <input type="checkbox" name="all_chk" id="all_chk" @click="checkedAll($event.target.checked)">
                             <label for="all_chk">전체선택</label>
                         </div>
                         <div class="del_btn">삭제 (<span class="num">0</span>)</div>
@@ -48,11 +48,12 @@
                               
                               <div class="price_btn">
                                   <strong class="price_unit">{{ cart.price }}</strong>원
-                                  <input type="button" class="minus_btn" value="-" @click="minusBtn">
-                                  <input type="text" class="product_count">
-                                  <input type="button" class="plus_btn" value="+" @click="plusBtn">
+                                  <input type="button" class="minus_btn" @click="minusBtn">
+                                  <input type="text" class="product_count" value="3">
+                                  <input type="button" class="plus_btn" @click="plusBtn">
                                 <span class="total_p">
                                   <strong class="price_amount"><span>{{ cart.price * cart.quantity }}</span></strong>원
+                                  <!-- <strong class="price_amount"><span>3000원</span></strong> -->
                                   <span type="button" @click="deleteBtn" class="del_li_btn"><img src="https://tictoc-web.s3.ap-northeast-2.amazonaws.com/web/img/icon/btn_del_circle.svg"></span>
                                 </span>
                               </div>
@@ -98,6 +99,13 @@
         p_id: 1,
         quantity: 9,
       });
+
+      const checkedAll = (checked) => {
+
+      };
+
+      
+  		    
   
       const products = ref([
         {p_id: 1, brand: '홍대주꾸미', price: 6600, name: '주꾸미 볶음', stock: 2300, delivery_type: '깜깜배송', sales_amount: 1500, img_url: 'https://img-cf.kurly.com/cdn-cgi/image/quality=85,width=400/shop/data/goods/1653034699910l0.jpeg'},
@@ -135,6 +143,12 @@
       const deleteBtn = () => {
   
       };
+
+      const getCartProductList = () => {
+        
+      };
+
+      getCartProductList();
   
       
   
@@ -148,6 +162,8 @@
         minusBtn,
         plusBtn,
         deleteBtn,
+        getCartProductList,
+        checkedAll,
       };
     },
   };
@@ -185,17 +201,20 @@
   }
   .cart_table .cart_list li > div.item_detail span {
     display: inline-block;
-    font-size: 25px;
+    font-size: 20px;
     width: 60%;
     position: absolute;
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
     margin-left: 100px;
+    color: #666;
   }
   .cart_table .cart_list li > div.item_detail .txt {
     margin-top: 1rem;
   }
+
+
   .cart_table .cart_list li > div.opt_info {
     position: absolute;
     right: 0;
