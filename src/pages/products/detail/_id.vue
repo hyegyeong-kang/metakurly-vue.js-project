@@ -150,6 +150,7 @@
 <script>
 import { ref } from 'vue';
 import axios from 'axios';
+import {useRoute} from 'vue-router';
 
 export default{ 
     setup() {
@@ -166,11 +167,14 @@ export default{
             // sales_amount: 1500, 
             // img_url: 'https://img-cf.kurly.com/cdn-cgi/image/quality=85,width=400/shop/data/goods/1653034699910l0.jpeg'
         });
+        
+        const route = useRoute();
+        const pid = route.params.id;
 
          const productDetailPage = async () => {
           console.log("ok");
           try {
-            const res = await axios.get('/products/4');
+            const res = await axios.get('/products/' + pid);
             productDetail.value = {...res.data};
             console.log(res);
           } catch(err) {

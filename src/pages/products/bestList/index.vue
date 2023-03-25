@@ -23,7 +23,8 @@
           <ul class="row">
             <div :value="product.p_id" :key="product.p_id" v-for="product in products">
                 <li class="cell" >
-                    <router-link :to="{path:'/products/'+product.p_id}"><div class="img-box"><span><img v-bind:src="product.img_url" style="width:250px; height:350px; margin:10px"/></span></div></router-link>
+                    <!-- <router-link :to="{path:'/products/'+product.p_id}"><div class="img-box"><span><img v-bind:src="product.img_url" style="width:250px; height:350px; margin:10px"/></span></div></router-link> -->
+                    <div @click="moveToPage(product.p_id, index)"><div class="img-box"><span><img v-bind:src="product.img_url" style="width:250px; height:350px; margin:10px"/></span></div></div>
                     <div style="display:none;" v-bind:bestProductId="product.p_id"></div>
                     <div style="color:gray" class="title">{{product.delivery_type}}배송</div>
                     <div class="price"><span>{{product.brand}}</span></div>
@@ -45,6 +46,7 @@
 <script>
 import {ref} from 'vue'; 
 import axios from 'axios';
+import {useRouter} from 'vue-router';
 
 export default {
   setup() {
@@ -74,6 +76,18 @@ export default {
     //   {p_id: 2, brand: '스윗밸런스', price: 5900, name: '오늘의 샐러드', stock: 1000, delivery_type: '깜깜배송', sales_amount: 5152, img_url: 'https://img-cf.kurly.com/cdn-cgi/image/quality=85,width=676/shop/data/goods/1655775819130l0.jpg'}
     // ]);
     const products = ref([]);
+    const router = useRouter();
+
+    const moveToPage = (productId) => {
+      console.log(productId);
+
+      router.push({
+        name: 'ProductDetail',
+        params: {
+          id: productId
+        }
+      });
+    }
 
     const bestListPage = async () => {
       console.log("ok");
@@ -91,6 +105,7 @@ export default {
     return {
       // product,
       products,
+      moveToPage,
     }
   }
 }
