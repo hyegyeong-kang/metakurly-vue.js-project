@@ -148,23 +148,37 @@
   </div>
 </template>
 <script>
-import { ref } from 'vue'
+import { ref } from 'vue';
+import axios from 'axios';
 
 export default{ 
     setup() {
+
         const product = ref('');
         const count = ref(1);
-
         const productDetail = ref({
-            p_id: 1, 
-            brand: '홍대주꾸미', 
-            price: 6600, 
-            name: '주꾸미 볶음', 
-            stock: 2300, 
-            delivery_type: '깜깜배송', 
-            sales_amount: 1500, 
-            img_url: 'https://img-cf.kurly.com/cdn-cgi/image/quality=85,width=400/shop/data/goods/1653034699910l0.jpeg'
+            // p_id: 1, 
+            // brand: '홍대주꾸미', 
+            // price: 6600, 
+            // name: '주꾸미 볶음', 
+            // stock: 2300, 
+            // delivery_type: '깜깜배송', 
+            // sales_amount: 1500, 
+            // img_url: 'https://img-cf.kurly.com/cdn-cgi/image/quality=85,width=400/shop/data/goods/1653034699910l0.jpeg'
         });
+
+         const productDetailPage = async () => {
+          console.log("ok");
+          try {
+            const res = await axios.get('/products/4');
+            productDetail.value = {...res.data};
+            console.log(res);
+          } catch(err) {
+            console.log(err);
+          }
+        }
+
+        productDetailPage();
 
         return {
             product,

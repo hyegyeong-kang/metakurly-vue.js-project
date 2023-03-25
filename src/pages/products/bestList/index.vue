@@ -24,7 +24,8 @@
             <div :value="product.p_id" :key="product.p_id" v-for="product in products">
                 <li class="cell" >
                     <router-link :to="{path:'/products/'+product.p_id}"><div class="img-box"><span><img v-bind:src="product.img_url" style="width:250px; height:350px; margin:10px"/></span></div></router-link>
-                    <div style="color:gray" class="title">{{product.delivery_type}}</div>
+                    <div style="display:none;" v-bind:bestProductId="product.p_id"></div>
+                    <div style="color:gray" class="title">{{product.delivery_type}}배송</div>
                     <div class="price"><span>{{product.brand}}</span></div>
                     <div class="price"><span>{{product.name}}</span></div>
                     <div class="price"><span>{{product.price}}원</span></div>
