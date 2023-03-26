@@ -19,11 +19,12 @@
                     
   
                     <!--장바구니 리스트-->
-                  <div :value="cart.cartnum" :key="cart.cartnum" v-for="cart in products">
+                  <div v-for="cart in products" :key="cart.cartnum" >
                       <li class="cell">
                           <!--상품 체크박스 부분-->
                           <div class="checkbox">
-                              <input type="checkbox" name="item_chk" id="item_chk01">
+                              <input type="checkbox" :id="'check_' + cart.cartnum" 
+                              :value="cart.cartnum" v-model="cart.selected" @change="selected($event)">
                               <label for="item_chk01"></label>
                           </div>
                           <!--상품 개별 설명-->
@@ -48,12 +49,12 @@
                               
                               <div class="price_btn">
                                   <strong class="price_unit">{{ cart.price }}</strong>원
-                                  <input type="button" class="minus_btn" @click="minusBtn">
-                                  <input type="text" class="product_count" value="3">
-                                  <input type="button" class="plus_btn" @click="plusBtn">
+                                  <input type="button" class="minus_btn" @click="minusBtn"> 
+                                  <input type="text" class="product_count"><span>{{count}}</span>
+                                  <input type="button" class="plus_btn"  @click="plusBtn">
                                 <span class="total_p">
-                                  <strong class="price_amount"><span>{{ cart.price * cart.quantity }}</span></strong>원
-                                  <!-- <strong class="price_amount"><span>3000원</span></strong> -->
+                                  <!-- <strong class="price_amount"><span>{{ cart.price * cart.quantity }}</span></strong>원 -->
+                                  <strong class="price_amount"><span>200</span></strong>원
                                   <span type="button" @click="deleteBtn" class="del_li_btn"><img src="https://tictoc-web.s3.ap-northeast-2.amazonaws.com/web/img/icon/btn_del_circle.svg"></span>
                                 </span>
                               </div>
@@ -88,10 +89,14 @@
   
   <script>
   import { ref } from "vue";
+  import axios from 'axios';
   export default {
     setup() {
       const cart = ref("");
       const count = ref(1);
+      const cartList = ref([]);
+      let allChecked = false;
+      let total = ref(0);
   
       const carts = ref({
         cartnum: 1,
@@ -101,11 +106,23 @@
       });
 
       const checkedAll = (checked) => {
-
+            this.allChecked = checked
+            for (let i in this.cartList) {
+                this.cartList[i].selected = this.allChecked;
+            }
       };
 
-      
-  		    
+      const selected =  (e) => {
+            for (let i in this.boardList) {
+                if(! this.cartList[i].selected) {
+                    this.allChecked = false;
+                    return;
+                } else {
+                    this.allChecked = true;
+                }
+            }
+        };
+		    
   
       const products = ref([
         {p_id: 1, brand: '홍대주꾸미', price: 6600, name: '주꾸미 볶음', stock: 2300, delivery_type: '깜깜배송', sales_amount: 1500, img_url: 'https://img-cf.kurly.com/cdn-cgi/image/quality=85,width=400/shop/data/goods/1653034699910l0.jpeg'},
@@ -133,23 +150,53 @@
       ]);
   
       const minusBtn = () => {
-  
+          axios.patch('/members/{id}/cart', {quantity: --count})
+            .then(res => {
+                  console.log(res.data)
+            })
+            .catch((error) => {
+              console.log(error);
+            });
       };
   
       const plusBtn = () => {
-  
+          axios.patch('/members/{id}/cart', {quantity: ++count})
+            .then(res => {
+              console.log(res.data)
+            })
+            .catch((error) => {
+              console.log(error);
+            });
       };
   
       const deleteBtn = () => {
-  
+          axios.delete('/members/{id}/cart')
+          .then(res => {
+            console.log(res.data)
+          })
+          .catch((error) => {
+            console.log(error);
+          });
       };
 
-      const getCartProductList = () => {
-        
+      const getCartProductList = async() => {
+          await axios.get('/members/{id}/cart', {
+            })
+            .then((response) => {
+                console.log(response.data);
+                this.cartList = response.data;
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+
+            let total = 0;
+            this.cartList.forEach((cart) => {
+              total += cart.price; // 장바구니에 담긴 제품들 모두 합친 가격
+            });
+            this.total = total;
       };
 
-      getCartProductList();
-  
       
   
     
@@ -164,6 +211,10 @@
         deleteBtn,
         getCartProductList,
         checkedAll,
+        cartList,
+        allChecked,
+        total,
+selected,
       };
     },
   };
