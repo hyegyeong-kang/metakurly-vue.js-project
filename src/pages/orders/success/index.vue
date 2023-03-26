@@ -318,8 +318,5 @@ export default {
 </script>
 
 <style>
-div.contents{
-    width: 76%;
-    margin: auto;
-}
+
 </style>
