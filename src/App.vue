@@ -1,13 +1,13 @@
 <template>
   <nav class="navbar navbar-expand-lg navbar-light shadow-sm">
       <div class="container">
-        <router-link class="navbar-brand" :to="{name: 'Home'}">Meta<span class="text-primary">Kurly</span></router-link>
+        <router-link class="navbar-brand" :to="{name: 'Home'}">Meta<span class="text-primary">Kurly.</span></router-link>
 
         <div class="navbar-collapse collapse" id="navbarContent">
           <ul class="navbar-nav ml-lg-4 pt-3 pt-lg-0">
             <li class="nav-item"><router-link class="nav-link" :to="{name: 'Home'}">홈</router-link></li>
             <!-- <li class="nav-item"><router-link class="nav-link" :to="{name: 'ProductsBestList'}">베스트</router-link></li> -->
-            <li class="nav-item"><router-link class="nav-link" to="/ProductsBestList">베스트</router-link></li>
+            <li class="nav-item"><router-link class="nav-link" to="/productsBestList">베스트</router-link></li>
             <!-- <li class="nav-item"><router-link class="nav-link" :to="{name: 'ProductsList'}">모든상품</router-link></li> -->
             <li class="nav-item"><router-link class="nav-link" to="/products">모든상품</router-link></li>
             <!-- <li class="nav-item"><router-link class="nav-link" :to="{name: 'MemberMyPage'}">마이페이지</router-link></li> -->
@@ -130,4 +130,9 @@ export default {
 @import "@/assets/css/owl.carousel.css";
 @import "@/assets/css/theme.css";
 @import "@/assets/css/login.css";
+
+h5{
+  font-size: 1.25rem;
+}
+
 </style>
