@@ -23,10 +23,10 @@
                                     <td>작성일</td>
                                 </thead>
                                  <tbody :value="review.r_id" :key="review.r_id" v-for="review in reviews">
-                                    <td>{{review.r_id}}</td>
-                                    <td>{{review.m_id}}</td>
-                                    <td><router-link :to="{path:'/products/review/'+review.r_id}">{{review.contents}}</router-link></td>
-                                    <td>{{review.review_date}}</td>
+                                        <td>{{review.r_id}}</td>
+                                        <td>{{review.m_id}}</td>
+                                        <td><router-link :to="{path:'/products/review/'+review.r_id}">{{review.contents}}</router-link></td>
+                                        <td>{{review.review_date}}</td>
                                 </tbody>
                             </table>
                         </ul>    
@@ -53,15 +53,37 @@
 </template>
 
 <script>
-import { ref } from 'vue'
+import { ref } from 'vue';
+import axios from 'axios';
+import {useRoute, useRouter} from 'vue-router';
+
 export default {
     setup() {
         const review = ref('');
         const reviews = ref([
-            {p_id: 1 , m_id: 1 , r_id: 1 , contents:'살쪘어요' , review_date: '2023-03-23'},
-            {p_id: 1 , m_id: 2 , r_id: 2 , contents:'맛있어요' , review_date: '2023-03-23'},
-            {p_id: 1 , m_id: 3 , r_id: 3 , contents:'배고파요' , review_date: '2023-03-23'}
+            // {p_id: 1 , m_id: 1 , r_id: 1 , contents:'살쪘어요' , review_date: '2023-03-23'},
+            // {p_id: 1 , m_id: 2 , r_id: 2 , contents:'맛있어요' , review_date: '2023-03-23'},
+            // {p_id: 1 , m_id: 3 , r_id: 3 , contents:'배고파요' , review_date: '2023-03-23'}
         ]);
+
+        const route = useRoute();
+        const router = useRouter();
+        const pid = route.params.id;
+
+        const riviewsPage = async () => {
+          console.log("ok");
+          console.log('pid !!!!!!! :' + pid);
+          try {
+            // const res = await axios.get('/products/'+ pid+'/reviews');
+            const res = await axios.get('/products/1/reviews');
+            reviews.value = {...res.data};
+            console.log(res);
+          } catch(err) {
+            console.log(err);
+          }
+        }
+        
+        riviewsPage();
 
         return {
             review,

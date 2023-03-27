@@ -43,7 +43,8 @@
         <ul class="contentNav">
           <li class="active"><a href="">상품 정보</a></li>
           <!-- <li><a href="">상품 후기<span>(<span class="count">20</span>)</span></a></li> -->
-          <li><router-link to="/products/reviews">상품 후기<span>(<span class="count">20</span>)</span></router-link></li>
+          <!-- <li><router-link to="/products/reviews">상품 후기<span>(<span class="count">20</span>)</span></router-link></li> -->
+          <li @click="moveToProductReviewsPage(productDetail.p_id, index)"><a>상품 후기<span>(<span class="count">20</span>)</span></a></li>
           <li><a href="">Q & A <span></span></a></li>
           <li><a href="">반품 / 교환</a></li>
         </ul>
@@ -150,11 +151,10 @@
 <script>
 import { ref } from 'vue';
 import axios from 'axios';
-import {useRoute} from 'vue-router';
+import {useRoute, useRouter} from 'vue-router';
 
 export default{ 
     setup() {
-
         const product = ref('');
         const count = ref(1);
         const productDetail = ref({
@@ -169,6 +169,7 @@ export default{
         });
         
         const route = useRoute();
+        const router = useRouter();
         const pid = route.params.id;
 
          const productDetailPage = async () => {
@@ -184,10 +185,22 @@ export default{
 
         productDetailPage();
 
+        const moveToProductReviewsPage = (productId) => {
+          console.log("상품아이디 !!!!!!!! : " + productId);
+
+          router.push({
+            name: 'ProductReviews',
+            params: {
+              id: productId
+            }
+          });
+        }
+
         return {
             product,
             productDetail,
             count,
+            moveToProductReviewsPage,
         }
     }
 }
