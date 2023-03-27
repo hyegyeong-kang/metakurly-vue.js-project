@@ -43,7 +43,8 @@
         <ul class="contentNav">
           <li class="active"><a href="">상품 정보</a></li>
           <!-- <li><a href="">상품 후기<span>(<span class="count">20</span>)</span></a></li> -->
-          <li><router-link to="/products/reviews">상품 후기<span>(<span class="count">20</span>)</span></router-link></li>
+          <!-- <li><router-link to="/products/reviews">상품 후기<span>(<span class="count">20</span>)</span></router-link></li> -->
+          <li @click="moveToProductReviewsPage(productDetail.p_id)"><a>상품 후기<span>(<span class="count">20</span>)</span></a></li>
           <li><a href="">Q & A <span></span></a></li>
           <li><a href="">반품 / 교환</a></li>
         </ul>
@@ -148,28 +149,59 @@
   </div>
 </template>
 <script>
-import { ref } from 'vue'
+import { ref } from 'vue';
+import axios from 'axios';
+import {useRoute, useRouter} from 'vue-router';
 
 export default{ 
     setup() {
         const product = ref('');
         const count = ref(1);
-
         const productDetail = ref({
-            p_id: 1, 
-            brand: '홍대주꾸미', 
-            price: 6600, 
-            name: '주꾸미 볶음', 
-            stock: 2300, 
-            delivery_type: '깜깜배송', 
-            sales_amount: 1500, 
-            img_url: 'https://img-cf.kurly.com/cdn-cgi/image/quality=85,width=400/shop/data/goods/1653034699910l0.jpeg'
+            // p_id: 1, 
+            // brand: '홍대주꾸미', 
+            // price: 6600, 
+            // name: '주꾸미 볶음', 
+            // stock: 2300, 
+            // delivery_type: '깜깜배송', 
+            // sales_amount: 1500, 
+            // img_url: 'https://img-cf.kurly.com/cdn-cgi/image/quality=85,width=400/shop/data/goods/1653034699910l0.jpeg'
         });
+        
+        const route = useRoute();
+        const router = useRouter();
+        const pid = route.params.id;
+
+         const productDetailPage = async () => {
+          console.log("pid !!!!!!!!! : " + pid);
+          console.log("ok");
+          try {
+            const res = await axios.get('/products/' + pid);
+            productDetail.value = {...res.data};
+            console.log(res);
+          } catch(err) {
+            console.log(err);
+          }
+        }
+
+        productDetailPage();
+
+        const moveToProductReviewsPage = (productId) => {
+          console.log("상품아이디 !!!!!!!! : " + productId);
+
+          router.push({
+            name: 'ProductReviews',
+            params: {
+              id: productId
+            }
+          });
+        }
 
         return {
             product,
             productDetail,
             count,
+            moveToProductReviewsPage,
         }
     }
 }
