@@ -78,21 +78,21 @@
       </div>
         
       <div style="overflow: hidden; margin: 0 20px;"
-        v-for="detail in orderDetails" :key="detail.productDTO.id">
+        v-for="detail in orderDetails" :key="detailp_id">
         <router-link
           style="float: left; :70 px; :70 px; margin: 20px 0;"
-          :to="`/products/` + detail.productDTO.id" id="productImg">
+          :to="`/products/` + detail.p_id" id="productImg">
           <img
             style="border: 0; width: 70px; height: 70px;"
-            :src='`${detail.productDTO.img_url}`'
+            :src='`${detail.img_url}`'
             alt="">
         </router-link>
         <div
           style="float: left; width: 68%; margin: 0 0 0 15px; padding: 17px 0 15px;">
           <router-link
             style="color: #333; font-size: 15px; line-: 18px; display: block; text-decoration: none; overflow: hidden; text-overflow: ellipsis; display: -webkit-box; :36 px; -webkit-box-orient: vertical; -webkit-line-clamp: 2; font-family: '맑은고딕', 'malgun gothic', 'dotum', sans-serif;"
-            :to="`/products/` + detail.productDTO.id">
-            {{detail.productDTO.brand}}<br>{{detail.productDTO.name}}
+            :to="`/products/` + detail.p_id">
+            {{detail.brand}}<br>{{detail.name}}
           </router-link>
           <div
             style="color: #999; font-size: 12px; line-height: 16px; font-weight: bold;">
@@ -104,7 +104,7 @@
           <div style="padding: 4px 0 0;">
             <span
               style="color: #333; font-size: 20px; font-weight: bold; padding: 0 0 0 7px;">
-              {{detail.productDTO.price * detail.quantity}}
+              {{detail.price * detail.quantity}}
               <em
               style="display: inline-block; color: #b0b0b0; font-style: normal; font-size: 12px; vertical-align: 1px; color: #333 !important; padding: 0 0 0 2px; vertical-align: 2px !important;">
                 원
@@ -222,27 +222,33 @@
 </template>
 
 <script>
-import {useRouter} from 'vue-router';
+import {useRoute, useRouter} from 'vue-router';
 import {ref} from 'vue';
-import axios from "axios";
+import axios from 'axios';
+
 export default {
   setup(){
+    const route = useRoute();
     const router = useRouter();
+    const pid = route.params.id;
+    const quantity = route.params.quantity;
+    // const orderProducts = ref([]);
     const member = ref(
        {id: 1, name: '홍길동', email: 'kosa@metanet.com', phone: '010-1234-5678', address: '서울', point: 20000}
     );
     const orderDetails = ref([
-      {id: 1, quantity: 2, 
-        productDTO: {id: 1, brand: '스윗밸런스', price: 5900, name: '오늘의 샐러드', img_url: 'https://img-cf.kurly.com/shop/data/goods/1655775819130l0.jpg'}}
+      // {id: 1, quantity: 2, 
+      //   productDTO: {id: 1, brand: '스윗밸런스', price: 5900, name: '오늘의 샐러드', img_url: 'https://img-cf.kurly.com/shop/data/goods/1655775819130l0.jpg'}}
     ]);
     const usePoint = ref(0);
-    const totalPrice = ref(orderDetails.value[0].productDTO.price * orderDetails.value[0].quantity);
-    const paymentAmount = ref(totalPrice.value - usePoint.value);
+    const totalPrice = ref(0);
+    const paymentAmount = ref(totalPrice.value);
     const toggleErrorMsg = ref(false);
     const togglePayMethod = ref('');
     const toggleDisabledPayMethod = ref(false);
     const msg = ref('');
  
+
     const inputPoint = () => {
       togglePayMethod.value = '';
       toggleDisabledPayMethod.value = false;
@@ -261,6 +267,41 @@ export default {
       }
     }
 
+    // const getProductsInfo = () => {
+    //   orderProducts.add({
+    //     p_id: pid,
+    //     quantity: quantity
+    //   });
+    // }
+
+    // getProductsInfo();
+
+    const getOrderPage = async () => {
+      try{
+        const res = await axios.post('/members/16/orders', {
+            orderProductList: [
+                {
+                    p_id: pid,
+                    quantity: quantity
+                }
+            ]
+        });
+        console.log(res.data.length);
+        orderDetails.value = {...res.data};
+        console.log(orderDetails.value);
+        for(let i = 0; i < res.data.length; i++){
+          totalPrice.value = totalPrice.value + orderDetails.value[i].totalPrice;
+          console.log(totalPrice.value);
+        }
+        //console.log(orderDetails.length);
+      } catch(err) {
+        console.log(err);
+      }
+      
+    }
+
+    getOrderPage();
+
     const doPay = async () => {
       // const res = await axios.post('/success', {
       //   deliveryMsg: msg.value,
@@ -278,6 +319,7 @@ export default {
 
 
     return {
+      route,
       member,
       orderDetails,
       usePoint,
