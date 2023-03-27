@@ -13,28 +13,28 @@
       </div>
 
       <div>
-        <div>비밀번호<span class="orange">&nbsp;*</span></div>
+        <div>비밀번호</div>
         <input name="password" type="password" value="${member.password}" required>
       </div>
 
       <div>
-        <div>이메일<span class="orange">&nbsp;*</span></div>
+        <div>이메일</div>
         <input name="email" type="text" placeholder="ex) marketkurly@kurly.com" value="${member.email}" required>
       </div>
 
       <div>
-        <div>휴대폰<span class="orange">&nbsp;*</span></div>
+        <div>휴대폰</div>
         <div>
           <input name="phone" type="text" placeholder="ex) 010-1234-5678" value="${member.phone}" required>
         </div>
       </div>
 
       <div>
-        <div>주소<span class="orange">&nbsp;*</span></div>
+        <div>주소</div>
         <input name="address" type="text" placeholder="주소지 입력" value="${member.address}" required>
       </div>
      
-     <button type="submit" id="submit">저장하기</button>
+     <button type="submit" id="save">저장하기</button>
 
     </form>
 

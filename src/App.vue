@@ -1,13 +1,13 @@
 <template>
   <nav class="navbar navbar-expand-lg navbar-light shadow-sm">
       <div class="container">
-        <router-link class="navbar-brand" :to="{name: 'Home'}">Meta<span class="text-primary">Kurly</span></router-link>
+        <router-link class="navbar-brand" :to="{name: 'Home'}">Meta<span class="text-primary">Kurly.</span></router-link>
 
         <div class="navbar-collapse collapse" id="navbarContent">
           <ul class="navbar-nav ml-lg-4 pt-3 pt-lg-0">
             <li class="nav-item"><router-link class="nav-link" :to="{name: 'Home'}">홈</router-link></li>
             <!-- <li class="nav-item"><router-link class="nav-link" :to="{name: 'ProductsBestList'}">베스트</router-link></li> -->
-            <li class="nav-item"><router-link class="nav-link" to="/ProductsBestList">베스트</router-link></li>
+            <li class="nav-item"><router-link class="nav-link" to="/products/bestList">베스트</router-link></li>
             <!-- <li class="nav-item"><router-link class="nav-link" :to="{name: 'ProductsList'}">모든상품</router-link></li> -->
             <li class="nav-item"><router-link class="nav-link" to="/products">모든상품</router-link></li>
             <!-- <li class="nav-item"><router-link class="nav-link" :to="{name: 'MemberMyPage'}">마이페이지</router-link></li> -->
@@ -15,12 +15,12 @@
           </ul>
 
           <div class="ml-auto" v-if="IsNullMember">
-            <router-link class="btn btn-outline rounded-pill" to="/singup">회원가입</router-link>
-            <router-link class="btn btn-outline rounded-pill" to="/login">로그인</router-link>
+            <router-link class="btn btn-outline rounded-pill" :to="{name: 'Signup'}">회원가입</router-link>
+            <router-link class="btn btn-outline rounded-pill" :to="{name: 'Login'}">로그인</router-link>
           </div>
           <div class="ml-auto" v-else>
             <!-- <p>환영합니다! {{member.userId}} 님</p> -->
-            <p>환영합니다! 000 님</p>
+            <p>환영합니다! {{member.userId}} 님</p>
             <router-link class="btn btn-outline rounded-pill" to="/logout">로그아웃</router-link>
           </div>
         </div>
@@ -111,7 +111,12 @@ export default {
     const member = ref(null);
 
     const IsNullMember = () => {
-      return member == null;
+      
+      const member = sessionStorage.getItem('member')
+      console.log(member.data);
+      if (member !== null) {
+        this.member = JSON.parse(member)
+      }
     }
 
     return{
@@ -130,4 +135,9 @@ export default {
 @import "@/assets/css/owl.carousel.css";
 @import "@/assets/css/theme.css";
 @import "@/assets/css/login.css";
+
+h5{
+  font-size: 1.25rem;
+}
+
 </style>
