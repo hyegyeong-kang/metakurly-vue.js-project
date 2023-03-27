@@ -49,6 +49,7 @@
 <script>
 import {useRouter} from 'vue-router';
 import {ref} from 'vue';
+import axios from 'axios';
 export default {
   setup(){
     const router = useRouter();
@@ -56,19 +57,23 @@ export default {
       {id: 1, name: '홍길동', email: 'kosa@metanet.com', phone: '010-1234-5678', address: '서울', point: 20000}
     );
     const order = ref(
-			{id: 1, orders_date: '2023-02-22', status: '배송완료', total_amount: 2, price: 11800, m_id: 1}
+			// {id: 1, orders_date: '2023-02-22', status: '배송완료', total_amount: 2, price: 11800, m_id: 1}
 		);
     const orderDetails = ref([
-      {id: 1, quantity: 2, 
-        productDTO: {id: 1, brand: '스윗밸런스', price: 5900, name: '오늘의 샐러드', img_url: 'https://img-cf.kurly.com/shop/data/goods/1655775819130l0.jpg'}}
+      // {id: 1, quantity: 2, 
+      //   productDTO: {id: 1, brand: '스윗밸런스', price: 5900, name: '오늘의 샐러드', img_url: 'https://img-cf.kurly.com/shop/data/goods/1655775819130l0.jpg'}}
     ]);
     const payment = ref(
-			{id: 1, o_id: 1, m_id: 1, method: '카드', payment_amount: 11800}
+			// {id: 1, o_id: 1, m_id: 1, method: '카드', payment_amount: 11800}
 		);
 
     // const cancelOrder = () => {
     //   axios.post
     // }
+
+    const getOrderList = async () => {
+      order = axios.get('')
+    }
 
     const moveToList = () => {
       router.push({

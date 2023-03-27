@@ -229,7 +229,7 @@ export default {
   setup(){
     const router = useRouter();
     const member = ref(
-      {id: 1, name: '홍길동', email: 'kosa@metanet.com', phone: '010-1234-5678', address: '서울', point: 20000}
+       {id: 1, name: '홍길동', email: 'kosa@metanet.com', phone: '010-1234-5678', address: '서울', point: 20000}
     );
     const orderDetails = ref([
       {id: 1, quantity: 2, 
