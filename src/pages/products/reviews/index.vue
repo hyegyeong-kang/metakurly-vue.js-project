@@ -25,7 +25,8 @@
                                  <tbody :value="review.r_id" :key="review.r_id" v-for="review in reviews">
                                         <td>{{review.r_id}}</td>
                                         <td>{{review.m_id}}</td>
-                                        <td><router-link :to="{path:'/products/review/'+review.r_id}">{{review.contents}}</router-link></td>
+                                        <!-- <td><router-link :to="{path:'/products/review/'+review.r_id}">{{review.contents}}</router-link></td> -->
+                                        <td @click="moveToReviewDetailPage(review.r_id, review.p_id)">{{review.contents}}</td>
                                         <td>{{review.review_date}}</td>
                                 </tbody>
                             </table>
@@ -70,11 +71,23 @@ export default {
         const router = useRouter();
         const pid = route.params.id;
 
+        const moveToReviewDetailPage = (reviewId, productId) => {
+            console.log('reviewId : ' + reviewId);
+            console.log('productId : ' + productId);
+
+            router.push({
+                name: 'ProductReviewDetail',
+                params: {
+                    r_id: reviewId,
+                    p_id: productId
+                }
+            });
+        }
+
         const reviewsPage = async () => {
           console.log("ok");
           console.log('pid !!!!!!! :' + pid);
           try {
-            // const res = await axios.get('/products/'+ pid+'/reviews');
             const res = await axios.get(`/products/${pid}/reviews`);
             reviews.value = {...res.data};
             console.log(res);
@@ -88,6 +101,7 @@ export default {
         return {
             review,
             reviews,
+            moveToReviewDetailPage,
         }
     }
 }
