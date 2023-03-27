@@ -1,5 +1,8 @@
 import { createRouter, createWebHistory } from "vue-router";
 import Home from '../pages/index.vue';
+import Signup from '../pages/members/signup.vue';
+import Login from '../pages/members/login.vue';
+import Modify from '../pages/members/modify.vue';
 import Orders from '../pages/orders/index.vue';
 import OrdersList from '../pages/orders/list/index.vue';
 import OrderSuccess from '../pages/orders/success/index.vue';
@@ -9,6 +12,7 @@ import ProductList from '../pages/products/list/index.vue';
 import ProductDetail from '../pages/products/detail/_id.vue';
 import ProductReviews from '../pages/products/reviews/index.vue';
 import ProductReviewDetail from '../pages/products/reviews/detail/_id.vue';
+import CartList from '../pages/cart/index.vue';
 
 const router = createRouter({
     history: createWebHistory(),
@@ -17,6 +21,21 @@ const router = createRouter({
             path: '/',
             name: 'Home',
             component: Home
+        },
+        {
+            path: '/members/signup',
+            name: 'Signup',
+            component: Signup
+        },
+        {
+            path: '/members/login',
+            name: 'Login',
+            component: Login
+        },
+        {
+            path: '/members/modify',
+            name: 'Modify',
+            component: Modify
         },
         {
             path: '/orders/:id/:quantity',
@@ -62,7 +81,13 @@ const router = createRouter({
             path: '/products/:p_id/review/:r_id',
             name: 'ProductReviewDetail',
             component: ProductReviewDetail
+        },
+        {
+            path: '/cart/cartList',
+            name: 'CartList',
+            component: CartList
         }
+
     ]
 });
 

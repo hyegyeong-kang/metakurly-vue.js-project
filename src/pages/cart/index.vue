@@ -2,7 +2,7 @@
     <link rel="stylesheet" href="/resources/css/cart/cart.css">
         <div class="page-section">
           <div class="container">
-    <div class="cart_table">
+    <div class="cart_table" id="kang">
                 <p><strong style="color:#7B68EE">장바구니</strong></p>
                 
     
@@ -11,7 +11,8 @@
                   <!--맨 위 전체선태그 삭제 버튼-->
                   <li>
                         <div class="checkbox">
-                            <input type="checkbox" name="all_chk" id="all_chk" v-model="allSelected" @click="selectAll">
+                            <!-- <input type="checkbox" name="all_chk" id="all_chk"  @click="checkAll($event.target.checked)"> -->
+                            <input type="checkbox" name="all_chk" id="all_chk" v-model="allChecked" @click="checkedAll($event.target.checked)">
                             <label for="all_chk">전체선택</label>
                         </div>
                         <div class="del_btn">삭제 (<span class="num">0</span>)</div>
@@ -19,18 +20,15 @@
                     
   
                     <!--장바구니 리스트-->
-                  <div v-for="(cart, index) in products" :key="cart.cartnum" >
+                  <div v-for="(cart, index) in cartList" :key="cart.cartnum" >
                       <li class="cell">
                           <!--상품 체크박스 부분-->
                           <div class="checkbox">
                               <input type="checkbox" :id="'check_' + cart.cartnum" 
-                              :value="cart.cartnum" v-model="cartList" :key="index" @click="select">
+                              value="cart.cartnum" v-model="item_selected" :key="index" @click="selected($event)">
                               <label :for="cart" :key="index + '1'"></label>
                           </div>
-                          <span>
-                            {{ cart.cartnum }}
-                          </span>
-                          <!--상품 개별 설명-->
+                    
                           <div class="item_detail">
                               <tr>
                                   <td class="td_width cart_info_td">
@@ -44,21 +42,21 @@
                                   </td>
                               </tr>
                               <!--상품 이미지, 상품 이름-->
-                              <img class="cart-img" :src="cart.img_url">
-                              <p class="productName"><span>{{ cart.name }}</span></p>
+                              <img class="cart-img" :src="`${ cart.productList[0].img_url}`">
+                              <p class="productName"><span>{{ cart.productList[0].name }}</span></p>
                           </div>
                           <!--상품 갯수 변경하는 버튼과 상품 갯수에 따른 가격 변동-->
                           <div class="opt_info">
                               
                               <div class="price_btn">
-                                  <strong class="price_unit">{{ cart.price }}</strong>원
-                                  <input type="button" class="minus_btn" @click="minusBtn"> 
-                                  <input type="text" class="product_count"><span>{{count}}</span>
-                                  <input type="button" class="plus_btn"  @click="plusBtn">
+                                  <strong class="price_unit">{{ cart.productList[0].price}}</strong>원
+                                  <input type="button" class="minus_btn" @click="minusBtn(cart)"> 
+                                  <input type="text" class="product_count"><span>{{ cart.quantity }}</span>
+                                  <input type="button" class="plus_btn"  @click="plusBtn(cart)">
                                 <span class="total_p">
-                                  <!-- <strong class="price_amount"><span>{{ cart.price * cart.quantity }}</span></strong>원 -->
-                                  <strong class="price_amount"><span>200</span></strong>원
-                                  <span type="button" @click="deleteBtn" class="del_li_btn"><img src="https://tictoc-web.s3.ap-northeast-2.amazonaws.com/web/img/icon/btn_del_circle.svg"></span>
+                                  <strong class="price_amount"><span>{{ cart.productList[0].price * cart.quantity }}</span></strong><span>원</span>
+                                  <!-- <strong class="price_amount"><span>{{ cart.productList[index].price}}</span></strong>원 -->
+                                  <span type="button" @click="deleteBtn(cart, index)" class="del_li_btn"><img src="https://tictoc-web.s3.ap-northeast-2.amazonaws.com/web/img/icon/btn_del_circle.svg"></span>
                                 </span>
                               </div>
   
@@ -74,8 +72,8 @@
                     <p>결제 정보</p>
     
                     <div class="cart_total_price">
-                        <p>총 상품금액 <strong class="item_price" style="color:#7B68EE">17,600</strong>원 <span class="plus_ic"></span></p>
-                        <p>총 결제금액 <strong class="total_price color-red" style="color:#7B68EE">17,600</strong>원</p>
+                        <p>총 상품금액 <strong class="item_price" style="color:#7B68EE"><span>80800</span></strong>원 <span class="plus_ic"></span></p>
+                        <p>총 결제금액 <strong class="total_price color-red" style="color:#7B68EE"><span>80800</span></strong>원</p>
                     </div>
                 </div>
     
@@ -90,16 +88,26 @@
     
       <div class="agree"></div> <!-- 이거 지우지 마세요! -->
   </template>
-  
+
   <script>
+
   import { ref } from "vue";
   import axios from 'axios';
   export default {
+
+    data(){
+        return{
+             checkkk: []
+        };
+    },
     setup() {
       const cart = ref("");
       let count = ref(1);
       const cartList = ref([]);
-      const allSelected = false;
+     // const selected = ref([]);
+      const cartA = ref([]);
+      let allChecked = false;
+      
   
       let total = ref(0);
   
@@ -114,71 +122,141 @@
         
   
       const products = ref([
-        {p_id: 1, brand: '홍대주꾸미', price: 6600, name: '주꾸미 볶음', stock: 2300, delivery_type: '깜깜배송', sales_amount: 1500, img_url: 'https://img-cf.kurly.com/cdn-cgi/image/quality=85,width=400/shop/data/goods/1653034699910l0.jpeg'},
-        {p_id: 2, brand: '스윗밸런스', price: 5900, name: '오늘의 샐러드', stock: 1000, delivery_type: '깜깜배송', sales_amount: 5152, img_url: 'https://img-cf.kurly.com/cdn-cgi/image/quality=85,width=676/shop/data/goods/1655775819130l0.jpg'}
-        ,
-        {p_id: 2, brand: '스윗밸런스', price: 5900, name: '오늘의 샐러드', stock: 1000, delivery_type: '깜깜배송', sales_amount: 5152, img_url: 'https://img-cf.kurly.com/cdn-cgi/image/quality=85,width=676/shop/data/goods/1655775819130l0.jpg'}
+        // {p_id: 1, brand: '홍대주꾸미', price: 6600, name: '주꾸미 볶음', stock: 2300, delivery_type: '깜깜배송', sales_amount: 1500, img_url: 'https://img-cf.kurly.com/cdn-cgi/image/quality=85,width=400/shop/data/goods/1653034699910l0.jpeg'},
+        // {p_id: 2, brand: '스윗밸런스', price: 5900, name: '오늘의 샐러드', stock: 1000, delivery_type: '깜깜배송', sales_amount: 5152, img_url: 'https://img-cf.kurly.com/cdn-cgi/image/quality=85,width=676/shop/data/goods/1655775819130l0.jpg'}
+        // ,
+        // {p_id: 2, brand: '스윗밸런스', price: 5900, name: '오늘의 샐러드', stock: 1000, delivery_type: '깜깜배송', sales_amount: 5152, img_url: 'https://img-cf.kurly.com/cdn-cgi/image/quality=85,width=676/shop/data/goods/1655775819130l0.jpg'}
       ]);
   
-      const minusBtn = () => {
-          axios.patch('/members/{id}/cart', {quantity: --count.value})
-            .then(res => {
-                  console.log(res.data)
-            })
-            .catch((error) => {
-              console.log(error);
-            });
+      const minusBtn = (cart) => {
+        console.log(`MINUS ${count}`)
+
+        return --cart.quantity;
+        //   axios.patch('/cart/cartUpdate', {quantity: --count})
+        //     .then(res => {
+        //           console.log(`HYE!! :     ${res.data}`)
+        //     })
+        //     .catch((error) => {
+        //       console.log(error);
+        //     });
       };
   
-      const plusBtn = () => {
-          axios.patch('/members/{id}/cart', {quantity: ++count.value})
-            .then(res => {
-              console.log(res.data)
-            })
-            .catch((error) => {
-              console.log(error);
-            });
+      const plusBtn = (cart) => {
+        return ++cart.quantity;
+        //   axios.patch('/members/{id}/cart', {quantity: ++count.value})
+        //     .then(res => {
+        //       console.log(res.data)
+        //     })
+        //     .catch((error) => {
+        //       console.log(error);
+        //     });
       };
   
-      const deleteBtn = () => {
-          axios.delete('/members/{id}/cart')
-          .then(res => {
-            console.log(res.data)
-          })
-          .catch((error) => {
-            console.log(error);
-          });
+      const deleteBtn = (cart, index) => {
+        console.log(`KANG1111111111 ${JSON.stringify(cart, null, 2)}`)
+        console.log(`KANG2222222222 ${JSON.stringify(cartList.value[index], null, 2)}`)
+        console.log(`KANG$$$$$$$$$ ${typeof cartList.value[0]}`)
+        delete cartList.value[index];
+        console.log(`KANG999999999 ${JSON.stringify(cartList.value, null, 2)}`)
+      //  cartList.remove(cart);
+      //  getTotalPrice(cartList.value);
+       // console.log(`KANG33333333 ${JSON.stringify(cartList.value, null, 2)}`)
+
+       
+        //   axios.delete('/cart/cartDelete')
+        //   .then(res => {
+        //     console.log(res.data)
+        //   })
+        //   .catch((error) => {
+        //     console.log(error);
+        //   });
       };
   
       const getCartProductList = async() => {
-          await axios.get('/members/{id}/cart', {
+        
+          await axios.get('/cart/cartList', {
             })
             .then((response) => {
-                console.log(response.data);
-                this.cartList = response.data;
+                
+                cartList.value = {...response.data}
+                console.log(`$$$$$$$$$$$$$$$$$$$$$ ${JSON.stringify(cartList.value, null, 2)}`);
+             //   this.cartList = response.data;
+             //Object.keys(cartList.value).length
+
+            console.log(`^^^^ ${Object.keys(cartList.value).length}`)
+            getTotalPrice(cartList.value);
+            
+            // for (let i = 0 ; i < Object.keys(cartList.value).length; i++) {
+            //     console.log(`%%3%%  ${JSON.stringify(cartList.value[i].productList[0].price, null, 2)}`);
+            //     const cart = cartList.value[i];
+            //     console.log(`*************** ${cart.productList[0].price}`)
+            //     total += cart.productList[0].price; // 장바구니에 담긴 제품들 모두 합친 가격.
+            // }
+
+            // console.log(`TOTAL!!!!: ${total}` )
+            // console.log(`TOTAL9999999999999: ${this.total}` )
+            // this.total.value = total;
+            
+            
+                
+                
+                // list.forEach((cart) => {
+                //     console.log(`TOTAL: ${cart}`)
+                //     total += cart.value[0].productList[0].price; // 장바구니에 담긴 제품들 모두 합친 가격
+                // });
+               // this.total = total.value;
+
+            })
+            .finally(() => {
+                
             })
             .catch((error) => {
                 console.log(error);
             });
-  
-            let total = 0;
-            this.cartList.forEach((cart) => {
-              total += cart.price; // 장바구니에 담긴 제품들 모두 합친 가격
-            });
-            this.total = total;
-      };
-  
-      const selectAll = () => {
+
+            
   
       };
-  
-      const select = () => {
-  
+
+      getCartProductList();
+
+
+
+      const getTotalPrice = (cartListValue) => {
+        console.log(`GETTTTTTTTTT: ${Object.keys(cartListValue).length}`);
+        let total = 0;
+        for (let i = 0 ; i < Object.keys(cartListValue).length; i++) {
+            console.log(`GYEIGN: ${cartListValue[i].productList[0].price}`)
+                console.log(`%%3%%  ${JSON.stringify(cartListValue[i].productList[0].price, null, 2)}`);
+                const cart = cartListValue[i];
+                console.log(`*************** ${cart.productList[0].price}`)
+                total += cart.productList[0].price; // 장바구니에 담긴 제품들 모두 합친 가격.
+            }
+            console.log(`@@@@KANG@@@@ ${total}`);
+            return total;
+       // this.total.value = total;
+      }
+
+
+
+      const checkedAll = (checked) => {
+        this.allChecked = checked
+            for (let i in this.cartList) {
+                this.cartList[i].selected = this.allChecked;
+            }
+      };
+
+      const selected = (event) => {
+        for (let i in this.boardList) {
+                if(! this.boardList[i].selected) {
+                    this.allChecked = false;
+                    return;
+                } else {
+                    this.allChecked = true;
+                }
+            }
       };
   
-      
-  
-    
   
       return {
         cart,
@@ -192,10 +270,14 @@
   
         cartList,
         total,
-        allSelected,
   
-        selectAll,
-        select,
+        selected,
+        cartA,
+
+        checkedAll,
+        allChecked,
+        getTotalPrice,
+  
   
       };
     },
@@ -278,7 +360,7 @@
     background: url(https://tictoc-web.s3.ap-northeast-2.amazonaws.com/web/img/icon/btn_plus.svg)
       no-repeat center;
   }
-  .cart_table .cart_list li > div.opt_info .price_btn span.number {
+  .cart_table .cart_list li > div.opt_info .price_btn span.number .price_unit {
     padding-bottom: 20px;
     font-size: 25px;
     background: #f5f5f5;
@@ -289,7 +371,7 @@
     display: inline-block;
     padding-bottom: 20px;
   }
-  .cart_table .cart_list li > div.opt_info > div.price_btn > span.total_p {
+  .cart_table .cart_list li > div.opt_info > div.price_btn > span.total_p text{
     font-size: 22px;
     /* float: right; */
     margin-left: 20px;
@@ -298,7 +380,7 @@
   .cart_table .cart_list li > div.opt_info > div.price_btn > span.total_p strong {
     vertical-align: sub;
     margin-right: 30px;
-    font-size: 25px;
+    font-size: 20px;
     padding-bottom: 20px;
   }
   .cart_table .cart_list li > div.opt_info > div.price_btn > span.total_p span {
