@@ -252,7 +252,8 @@ export default{
             console.log("p_id!!!!!~~~~~ : " + p_id);
             console.log("r_id !!!!!!!!!!~~~ : " + r_id);
             const res = await axios.get(`/products/${p_id}/reviews/${r_id}`);
-            reviewDetail.value = {...res.data};
+            reviewDetail.value = {...res.data.productReview};
+            productDetail.value = {...res.data.productDTO};
             console.log(res);
           } catch(err) {
             console.log(err);
