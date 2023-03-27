@@ -45,7 +45,6 @@
 import {ref} from 'vue'; 
 import axios from 'axios';
 import {useRouter} from 'vue-router';
-
 export default {
   setup() {
     const router = useRouter();
@@ -74,10 +73,8 @@ export default {
       // ,
       // {p_id: 2, brand: '스윗밸런스', price: 5900, name: '오늘의 샐러드', stock: 1000, delivery_type: '깜깜배송', sales_amount: 5152, img_url: 'https://img-cf.kurly.com/cdn-cgi/image/quality=85,width=676/shop/data/goods/1655775819130l0.jpg'}
     ]);
-
       const moveToProductDetailPage = (productId) => {
       console.log(productId);
-
       router.push({
         name: 'ProductDetail',
         params: {
@@ -85,8 +82,6 @@ export default {
         }
       });
     }
-
-
     const allProductPage = async () => {
       console.log("ok");
       try{
@@ -97,21 +92,17 @@ export default {
         console.log(err);
       }
     }
-
     allProductPage();
-
     return {
       product,
       products,
       moveToProductDetailPage,
     }
   }
-
 }
 </script>
 
 <style scoped>
-
 body, ul, li, h1,p {
   margin: 0;
   padding: 0;
@@ -121,7 +112,6 @@ a {
   color: inherit;
   text-decoration: none;
 }
-
 /* 헤더1__회원가입/로그인/고객센터 */
 .header-1 {
   width: 1060px;
@@ -213,7 +203,6 @@ a {
 .header-2 > .logo-box > .beauty-text {
   margin-left: 6px;
 }
-
 /*헤더2__검색창*/
 .header-2 > .search-input-box {
   float: left;
@@ -238,7 +227,6 @@ a {
   border: none;
   background-color: transparent;
 }
-
 /*헤더2__아이콘*/
 .header-2 > .icon-box {
   float: right;
@@ -249,8 +237,6 @@ a {
 .header-2 > .icon-box > .icon-1, .icon-2 {
   padding-right: 16px;
 }
-
-
 /*네비*/
 nav {
   width: 1060px;
@@ -267,7 +253,6 @@ nav::after {
   clear: both;
   display: block;
 }
-
 /*네비__카테고리*/
 /*1차메뉴*/
 nav > .category > .category-menu-box > .category-menu-box {
@@ -288,7 +273,6 @@ nav > .category > .category-menu-box > a > span > i {
   width: 16px;
   height: 14px;
 }
-
 /*2차메뉴*/
 nav > .category > .category-menu-box {
   position: relative;
@@ -310,7 +294,6 @@ nav > .category > .category-menu-box > .category-menu__menu-2 > ul > li > div > 
   display: inline-block;
   padding: 0 10px;
 }
-
 /*3차메뉴*/
 nav > .category > .category-menu-box > .category-menu__menu-2 > ul > li > .category-menu__menu-3 {
   position: absolute;
@@ -322,7 +305,6 @@ nav > .category > .category-menu-box > .category-menu__menu-2 > ul > li > .categ
 nav > .category > .category-menu-box > .category-menu__menu-2 > ul > li > .category-menu__menu-3 > ul > li {
   padding: 10px;
 }
-
 /*네비__센터메뉴*/
 nav > .center-menu {
   width: 600px;
@@ -341,7 +323,6 @@ nav > .center-menu > ul > li > a > span {
   font-size: 16px;
   font-weight: bold;
 }
-
 /*샛별·택배 배송안내*/
 nav > .delivery {
   width: 150px;
@@ -361,8 +342,6 @@ nav > .delivery > ul > li > a > span {
   font-size: 13px;
   font-weight: bold;
 }
-
-
 /*배너1*/
 .banner-1 {
   width: 100%;
@@ -372,8 +351,6 @@ nav > .delivery > ul > li > a > span {
 .banner-1 > a > img {
   object-fit: cover;
 }
-
-
 /*상품리스트*/
 .product-section-1 {
   text-align: center;
@@ -435,8 +412,6 @@ nav > .delivery > ul > li > a > span {
   font-size: 12px;
   margin-top: 5px;
 }
-
-
 /*배너2*/
 .banner-2 {
   width: 1060px;
@@ -451,8 +426,6 @@ nav > .delivery > ul > li > a > span {
   object-fit: cover;
   vertical-align: bottom;
 }
-
-
 /*한정특가*/
 .special-price {
   width: 1060px;
@@ -530,8 +503,6 @@ nav > .delivery > ul > li > a > span {
   color: rgb(153, 153, 153);
   font-size: 14px;
 }
-
-
 /*상품리스트2*/
 .product-section-2 {
   text-align: center;
@@ -592,8 +563,6 @@ nav > .delivery > ul > li > a > span {
   font-size: 12px;
   margin-top: 5px;
 }
-
-
 /*배너3*/
 .banner-3 {
   width: 1060px;
@@ -608,8 +577,6 @@ nav > .delivery > ul > li > a > span {
   object-fit: cover;
   vertical-align: bottom;
 }
-
-
 /*상품리스트3*/
 .product-section-3 {
   width: 1060px;
@@ -640,7 +607,6 @@ nav > .delivery > ul > li > a > span {
   font-size: 16px;
   color: rgb(76, 76, 76);
 }
-
 /*상품리스트3 리스트*/
 .product-section-3__list {
   width: 1060px;
@@ -723,5 +689,4 @@ nav > .delivery > ul > li > a > span {
    padding-bottom: 10px;
    transform: translateY(-250%);
 }
-
 </style>
