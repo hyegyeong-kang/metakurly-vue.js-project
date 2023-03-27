@@ -12,6 +12,7 @@ import ProductList from '../pages/products/list/index.vue';
 import ProductDetail from '../pages/products/detail/_id.vue';
 import ProductReviews from '../pages/products/reviews/index.vue';
 import ProductReviewDetail from '../pages/products/reviews/detail/_id.vue';
+import CartList from '../pages/cart/index.vue';
 
 const router = createRouter({
     history: createWebHistory(),
@@ -80,7 +81,13 @@ const router = createRouter({
             path: '/products/:p_id/review/:r_id',
             name: 'ProductReviewDetail',
             component: ProductReviewDetail
+        },
+        {
+            path: '/cart/cartList',
+            name: 'CartList',
+            component: CartList
         }
+
     ]
 });
 
