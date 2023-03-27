@@ -20,7 +20,7 @@
           </div>
           <div class="ml-auto" v-else>
             <!-- <p>환영합니다! {{member.userId}} 님</p> -->
-            <p>환영합니다! 000 님</p>
+            <p>환영합니다! {{member.userId}} 님</p>
             <router-link class="btn btn-outline rounded-pill" to="/logout">로그아웃</router-link>
           </div>
         </div>
@@ -111,7 +111,12 @@ export default {
     const member = ref(null);
 
     const IsNullMember = () => {
-      return member == null;
+      
+      const member = sessionStorage.getItem('member')
+      console.log(member.data);
+      if (member !== null) {
+        this.member = JSON.parse(member)
+      }
     }
 
     return{

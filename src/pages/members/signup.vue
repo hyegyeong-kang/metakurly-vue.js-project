@@ -49,7 +49,7 @@
         </p>
       </div>
      
-     <button type="submit" @click="signup">가입하기</button>
+     <button type="submit">가입하기</button>
 
     </form>
 
@@ -57,10 +57,14 @@
 </template>
 
 <script>
+import {useRoute, useRouter} from 'vue-router';
 import { ref } from 'vue';
 import axios from 'axios';
 export default {
+  name: 'SignupForm',
   setup() {
+    const route = useRoute();
+    const router = useRouter();
     const member = ref({
       userId: '',
       password: '',
@@ -72,20 +76,23 @@ export default {
 
     const signupForm = async() => {
       try {
-            let res;
-            const data = {
-                userId: member.value.userId,
-                password: member.value.password,
-                name:member.value.name,
-                email:member.value.email,
-                phone:member.value.phone,
-                address:member.value.address
-            }
-            res = await axios.post(data);
+        console.log(member.value);
+        const res = await axios.post('/members/signup', {
+          userId: member.value.userId,
+          password: member.value.password,
+          name: member.value.name,
+          email: member.value.email,
+          phone: member.value.phone,
+          address: member.value.address
+        });
+        console.log(res.data);
+        location.href = '/members/login';
 
         } catch (error) {
             console.log(error);
-        }  
+        } 
+        
+        console.log(member.value);
     };
 
     const idCheck = async() => {
@@ -95,8 +102,7 @@ export default {
     return {
       member,
       signupForm,
-      idCheck,
-    }
+    };
   }
 }
 </script>
