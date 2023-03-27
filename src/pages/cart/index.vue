@@ -11,7 +11,7 @@
                   <!--맨 위 전체선태그 삭제 버튼-->
                   <li>
                         <div class="checkbox">
-                            <input type="checkbox" name="all_chk" id="all_chk" @click="checkedAll($event.target.checked)">
+                            <input type="checkbox" name="all_chk" id="all_chk" v-model="allSelected" @click="selectAll">
                             <label for="all_chk">전체선택</label>
                         </div>
                         <div class="del_btn">삭제 (<span class="num">0</span>)</div>
@@ -19,13 +19,17 @@
                     
   
                     <!--장바구니 리스트-->
-                  <div :value="cart.cartnum" :key="cart.cartnum" v-for="cart in products">
+                  <div v-for="(cart, index) in products" :key="cart.cartnum" >
                       <li class="cell">
                           <!--상품 체크박스 부분-->
                           <div class="checkbox">
-                              <input type="checkbox" name="item_chk" id="item_chk01">
-                              <label for="item_chk01"></label>
+                              <input type="checkbox" :id="'check_' + cart.cartnum" 
+                              :value="cart.cartnum" v-model="cartList" :key="index" @click="select">
+                              <label :for="cart" :key="index + '1'"></label>
                           </div>
+                          <span>
+                            {{ cart.cartnum }}
+                          </span>
                           <!--상품 개별 설명-->
                           <div class="item_detail">
                               <tr>
@@ -48,12 +52,12 @@
                               
                               <div class="price_btn">
                                   <strong class="price_unit">{{ cart.price }}</strong>원
-                                  <input type="button" class="minus_btn" @click="minusBtn">
-                                  <input type="text" class="product_count" value="3">
-                                  <input type="button" class="plus_btn" @click="plusBtn">
+                                  <input type="button" class="minus_btn" @click="minusBtn"> 
+                                  <input type="text" class="product_count"><span>{{count}}</span>
+                                  <input type="button" class="plus_btn"  @click="plusBtn">
                                 <span class="total_p">
-                                  <strong class="price_amount"><span>{{ cart.price * cart.quantity }}</span></strong>원
-                                  <!-- <strong class="price_amount"><span>3000원</span></strong> -->
+                                  <!-- <strong class="price_amount"><span>{{ cart.price * cart.quantity }}</span></strong>원 -->
+                                  <strong class="price_amount"><span>200</span></strong>원
                                   <span type="button" @click="deleteBtn" class="del_li_btn"><img src="https://tictoc-web.s3.ap-northeast-2.amazonaws.com/web/img/icon/btn_del_circle.svg"></span>
                                 </span>
                               </div>
@@ -62,6 +66,7 @@
                           </div>
                       </li>
                   </div> <!-- for 문 끝남 -->
+                  <span></span>
                 </ul>
     
                 <!--밑에 결제 정보 텍스트-->
@@ -88,10 +93,15 @@
   
   <script>
   import { ref } from "vue";
+  import axios from 'axios';
   export default {
     setup() {
       const cart = ref("");
-      const count = ref(1);
+      let count = ref(1);
+      const cartList = ref([]);
+      const allSelected = false;
+  
+      let total = ref(0);
   
       const carts = ref({
         cartnum: 1,
@@ -99,56 +109,72 @@
         p_id: 1,
         quantity: 9,
       });
-
-      const checkedAll = (checked) => {
-
-      };
-
-      
-  		    
+  
+  
+        
   
       const products = ref([
         {p_id: 1, brand: '홍대주꾸미', price: 6600, name: '주꾸미 볶음', stock: 2300, delivery_type: '깜깜배송', sales_amount: 1500, img_url: 'https://img-cf.kurly.com/cdn-cgi/image/quality=85,width=400/shop/data/goods/1653034699910l0.jpeg'},
         {p_id: 2, brand: '스윗밸런스', price: 5900, name: '오늘의 샐러드', stock: 1000, delivery_type: '깜깜배송', sales_amount: 5152, img_url: 'https://img-cf.kurly.com/cdn-cgi/image/quality=85,width=676/shop/data/goods/1655775819130l0.jpg'}
         ,
         {p_id: 2, brand: '스윗밸런스', price: 5900, name: '오늘의 샐러드', stock: 1000, delivery_type: '깜깜배송', sales_amount: 5152, img_url: 'https://img-cf.kurly.com/cdn-cgi/image/quality=85,width=676/shop/data/goods/1655775819130l0.jpg'}
-        ,
-        {p_id: 2, brand: '스윗밸런스', price: 5900, name: '오늘의 샐러드', stock: 1000, delivery_type: '깜깜배송', sales_amount: 5152, img_url: 'https://img-cf.kurly.com/cdn-cgi/image/quality=85,width=676/shop/data/goods/1655775819130l0.jpg'}
-        ,
-        {p_id: 2, brand: '스윗밸런스', price: 5900, name: '오늘의 샐러드', stock: 1000, delivery_type: '깜깜배송', sales_amount: 5152, img_url: 'https://img-cf.kurly.com/cdn-cgi/image/quality=85,width=676/shop/data/goods/1655775819130l0.jpg'}
-        ,
-        {p_id: 2, brand: '스윗밸런스', price: 5900, name: '오늘의 샐러드', stock: 1000, delivery_type: '깜깜배송', sales_amount: 5152, img_url: 'https://img-cf.kurly.com/cdn-cgi/image/quality=85,width=676/shop/data/goods/1655775819130l0.jpg'}
-        ,
-        {p_id: 2, brand: '스윗밸런스', price: 5900, name: '오늘의 샐러드', stock: 1000, delivery_type: '깜깜배송', sales_amount: 5152, img_url: 'https://img-cf.kurly.com/cdn-cgi/image/quality=85,width=676/shop/data/goods/1655775819130l0.jpg'}
-        ,
-        {p_id: 2, brand: '스윗밸런스', price: 5900, name: '오늘의 샐러드', stock: 1000, delivery_type: '깜깜배송', sales_amount: 5152, img_url: 'https://img-cf.kurly.com/cdn-cgi/image/quality=85,width=676/shop/data/goods/1655775819130l0.jpg'}
-        ,
-        {p_id: 2, brand: '스윗밸런스', price: 5900, name: '오늘의 샐러드', stock: 1000, delivery_type: '깜깜배송', sales_amount: 5152, img_url: 'https://img-cf.kurly.com/cdn-cgi/image/quality=85,width=676/shop/data/goods/1655775819130l0.jpg'}
-        ,
-        {p_id: 2, brand: '스윗밸런스', price: 5900, name: '오늘의 샐러드', stock: 1000, delivery_type: '깜깜배송', sales_amount: 5152, img_url: 'https://img-cf.kurly.com/cdn-cgi/image/quality=85,width=676/shop/data/goods/1655775819130l0.jpg'}
-        ,
-        {p_id: 2, brand: '스윗밸런스', price: 5900, name: '오늘의 샐러드', stock: 1000, delivery_type: '깜깜배송', sales_amount: 5152, img_url: 'https://img-cf.kurly.com/cdn-cgi/image/quality=85,width=676/shop/data/goods/1655775819130l0.jpg'}
-        ,
-        {p_id: 2, brand: '스윗밸런스', price: 5900, name: '오늘의 샐러드', stock: 1000, delivery_type: '깜깜배송', sales_amount: 5152, img_url: 'https://img-cf.kurly.com/cdn-cgi/image/quality=85,width=676/shop/data/goods/1655775819130l0.jpg'}
       ]);
   
       const minusBtn = () => {
-  
+          axios.patch('/members/{id}/cart', {quantity: --count.value})
+            .then(res => {
+                  console.log(res.data)
+            })
+            .catch((error) => {
+              console.log(error);
+            });
       };
   
       const plusBtn = () => {
-  
+          axios.patch('/members/{id}/cart', {quantity: ++count.value})
+            .then(res => {
+              console.log(res.data)
+            })
+            .catch((error) => {
+              console.log(error);
+            });
       };
   
       const deleteBtn = () => {
+          axios.delete('/members/{id}/cart')
+          .then(res => {
+            console.log(res.data)
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      };
+  
+      const getCartProductList = async() => {
+          await axios.get('/members/{id}/cart', {
+            })
+            .then((response) => {
+                console.log(response.data);
+                this.cartList = response.data;
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+  
+            let total = 0;
+            this.cartList.forEach((cart) => {
+              total += cart.price; // 장바구니에 담긴 제품들 모두 합친 가격
+            });
+            this.total = total;
+      };
+  
+      const selectAll = () => {
   
       };
-
-      const getCartProductList = () => {
-        
+  
+      const select = () => {
+  
       };
-
-      getCartProductList();
   
       
   
@@ -163,7 +189,14 @@
         plusBtn,
         deleteBtn,
         getCartProductList,
-        checkedAll,
+  
+        cartList,
+        total,
+        allSelected,
+  
+        selectAll,
+        select,
+  
       };
     },
   };
@@ -213,8 +246,8 @@
   .cart_table .cart_list li > div.item_detail .txt {
     margin-top: 1rem;
   }
-
-
+  
+  
   .cart_table .cart_list li > div.opt_info {
     position: absolute;
     right: 0;
