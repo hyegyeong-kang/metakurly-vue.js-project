@@ -50,12 +50,12 @@ const router = createRouter({
             component: ProductDetail 
         },
         {
-            path: '/products/reviews',
+            path: '/products/:id/reviews',
             name: 'ProductReviews',
             component: ProductReviews
         },
         {
-            path: '/products/review/:id',
+            path: '/products/:p_id/review/:r_id',
             name: 'ProductReviewDetail',
             component: ProductReviewDetail
         }
