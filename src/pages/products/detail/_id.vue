@@ -33,7 +33,7 @@
           </div>
           <div class="all-price">총 상품금액 <span> {{productDetail.price * count}} </span>원</div>
           <div class="btn">
-            <a href="">장바구니</a>
+            <router-link :to="{name: 'CartList'}">장바구니</router-link>
             <!-- <a @click.prevent="moveToOrderPage">구매하기</a> -->
             <div @click="moveToOrderPage">
               <router-link :to="{name: 'Orders', params: {p_id: productDetail.p_id, quantity: count}}">구매하기</router-link>
