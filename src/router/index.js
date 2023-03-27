@@ -38,7 +38,7 @@ const router = createRouter({
             component: Modify
         },
         {
-            path: '/orders',
+            path: '/orders/:id/:quantity',
             name: 'Orders',
             component: Orders
         },

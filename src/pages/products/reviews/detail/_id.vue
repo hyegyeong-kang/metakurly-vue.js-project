@@ -22,7 +22,7 @@
 			           	 <ul>
 			           	 	 <li>✔︎ 브랜드 : {{productDetail.brand}}</li>   
 				           	 <li>✔︎ 상품명 : {{productDetail.name}}</li>
-				           	 <li>✔︎ 배송타입 : {{productDetail.delivery_type}}</li>
+				           	 <li>✔︎ 배송타입 : {{productDetail.delivery_type}}배송</li>
 				      	     <li>✔︎ 작성일 : {{reviewDetail.review_date}}</li>
 			           	 </ul>
 		                <span class="author"></span>

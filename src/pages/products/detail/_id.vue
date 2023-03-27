@@ -34,7 +34,10 @@
           <div class="all-price">총 상품금액 <span> {{productDetail.price * count}} </span>원</div>
           <div class="btn">
             <a href="">장바구니</a>
-            <a href="">구매하기</a>
+            <!-- <a @click.prevent="moveToOrderPage">구매하기</a> -->
+            <div @click="moveToOrderPage">
+              <router-link :to="{name: 'Orders', params: {p_id: productDetail.p_id, quantity: count}}">구매하기</router-link>
+            </div>
           </div>
         </div>
       </div>
@@ -197,11 +200,26 @@ export default{
           });
         }
 
+        const moveToOrderPage = () => {
+          
+          // router.push({
+          //   name: 'Orders'
+          // });
+          router.push({
+            name: 'Orders',
+            params: {
+              id: pid,
+              quantity: count.value
+            }
+          });
+        }
+
         return {
             product,
             productDetail,
             count,
             moveToProductReviewsPage,
+            moveToOrderPage,
         }
     }
 }
