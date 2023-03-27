@@ -1,7 +1,7 @@
 <template>
   <nav class="navbar navbar-expand-lg navbar-light shadow-sm">
       <div class="container">
-        <router-link class="navbar-brand" :to="{name: 'Home'}">Meta<span class="text-primary">Kurly</span></router-link>
+        <router-link class="navbar-brand" :to="{name: 'Home'}">Meta<span class="text-primary">Kurly.</span></router-link>
 
         <div class="navbar-collapse collapse" id="navbarContent">
           <ul class="navbar-nav ml-lg-4 pt-3 pt-lg-0">
@@ -130,4 +130,9 @@ export default {
 @import "@/assets/css/owl.carousel.css";
 @import "@/assets/css/theme.css";
 @import "@/assets/css/login.css";
+
+h5{
+  font-size: 1.25rem;
+}
+
 </style>

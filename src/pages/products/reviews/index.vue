@@ -109,7 +109,7 @@ export default {
 
 <style scoped>
 /*  폰트 적용 */
-@import url(http://merongshop.com/ind-script/optimizer.php?filename=tZVBUsUgDIb3rVvPEauXeCsXegIKsTACYZLg2NvLe-3CmbdxKl2Syf_9mSQAeEoI0zNDYVrYJGAUqmwRrAh8MGUFSylRfmiBR_hLPtpBKFYNlIeZvg8Kq-pR02hW5GNSNXPEX1K0YxVkgYQtdxFP5WmCUucY7Og1RRCHo0MJSwb5DPllupETuRqxqdKMDJGWkDtS16sCiB3yJYgSr6_Uw6M1jqrCbCTYm-Hd6LtQt0BvahtjO-BQw1lkJYoayll4j_E0dlt_V-1pPS-mLZ9RPK3zZj4LfffQ_PNy7kaptlW5at99KCXkpZ_DPksQNGy9M2q6V28pfzVIexGL7Q7f639Di1m707euXNC47Q_4AQ&type=css&k=2485782bee608c5c4b65c94c695d14109bd58bf6&t=1540974567);
+/* @import url(http://merongshop.com/ind-script/optimizer.php?filename=tZVBUsUgDIb3rVvPEauXeCsXegIKsTACYZLg2NvLe-3CmbdxKl2Syf_9mSQAeEoI0zNDYVrYJGAUqmwRrAh8MGUFSylRfmiBR_hLPtpBKFYNlIeZvg8Kq-pR02hW5GNSNXPEX1K0YxVkgYQtdxFP5WmCUucY7Og1RRCHo0MJSwb5DPllupETuRqxqdKMDJGWkDtS16sCiB3yJYgSr6_Uw6M1jqrCbCTYm-Hd6LtQt0BvahtjO-BQw1lkJYoayll4j_E0dlt_V-1pPS-mLZ9RPK3zZj4LfffQ_PNy7kaptlW5at99KCXkpZ_DPksQNGy9M2q6V28pfzVIexGL7Q7f639Di1m707euXNC47Q_4AQ&type=css&k=2485782bee608c5c4b65c94c695d14109bd58bf6&t=1540974567); */
 
 html {
     font-family: "dotum, Verdana, Dotum, AppleGothic", sans-serif

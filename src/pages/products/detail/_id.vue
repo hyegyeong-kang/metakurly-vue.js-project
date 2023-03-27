@@ -6,7 +6,7 @@
       <div class="viewHeader">
         <!-- 상품이미지 -->
         <div class="productImg">
-            <img v-bind:src="productDetail.img_url" alt="">
+            <img v-bind:src="productDetail.img_url" id="Img" alt="">
         </div>
         <!-- 상품 설명 -->
         <div class="productInfo">
@@ -215,7 +215,8 @@ export default{
 
 	.shCMSshop{margin: 0;	padding: 60px 0 0 0;	width: 1200px; margin: 0 auto;}
 	.shCMSshop .shopView .viewHeader:after{display: block; content: ''; clear: both;}
-	.shCMSshop .shopView .viewHeader .productImg{float: left; }
+	.shCMSshop .shopView .viewHeader .productImg{float: left;}
+  #Img {width: 400px;}
 	.shCMSshop .shopView .viewHeader .productImg .mainImg{width: 500px; height:500px; background: #000;}
 	.shCMSshop .shopView .viewHeader .productImg ul{margin-top: 35px;}
 	.shCMSshop .shopView .viewHeader .productImg ul li{width: 85px; height:85px; background: #000; display: inline-block;margin-right: 25px; border:1px solid #ccc; cursor: pointer;}

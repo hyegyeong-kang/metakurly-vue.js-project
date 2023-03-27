@@ -2,7 +2,8 @@ import { createRouter, createWebHistory } from "vue-router";
 import Home from '../pages/index.vue';
 import Orders from '../pages/orders/index.vue';
 import OrdersList from '../pages/orders/list/index.vue';
-// import OrdersDetail from '../pages/orders/detail/o_id.vue';
+import OrderSuccess from '../pages/orders/success/index.vue';
+import OrdersDetail from '../pages/orders/_id.vue';
 import BestList from '../pages/products/bestList/index.vue';
 import ProductList from '../pages/products/list/index.vue';
 import ProductDetail from '../pages/products/detail/_id.vue';
@@ -23,17 +24,20 @@ const router = createRouter({
             component: Orders
         },
         {
+            path: '/orders/success',
+            name: 'OrderSuccess',
+            component: OrderSuccess
+        },
+        {
             path: '/orders/list',
             name: 'OrdersList',
             component: OrdersList
-        }
-        // ,
-        // {
-        //     path: '/orders/detail/:id',
-        //     name: 'OrdersDetail',
-        //     component: OrdersDetail
-        // }
-        ,
+        },
+        {
+            path: '/orders/:id',
+            name: 'OrdersDetail',
+            component: OrdersDetail
+        },
         {
             path: '/products/bestList',
             name: 'BestList',
@@ -63,8 +67,3 @@ const router = createRouter({
 });
 
 export default router;
-
-//  /
-//  /orders
-//  /orders/list
-//  /orders/detail/:o_id

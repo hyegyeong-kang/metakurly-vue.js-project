@@ -5,13 +5,13 @@
             <div style="margin: 0; padding: 0; border: 0; box-sizing: border-box; font-family: '맑은고딕', 'Malgun Gothic', 'dotum', sans-serif; letter-spacing: -1px; padding: 11px 0 0; color: #222; font-size: 32px; line-height: 41px; letter-spacing: -2px;">
                 주문이 정상적으로 
                 <strong style="margin: 0; padding: 0; border: 0; box-sizing: border-box; font-family: '맑은고딕', 'Malgun Gothic', 'dotum', sans-serif; letter-spacing: -1px; color: #222; font-size: 32px; line-height: 41px; letter-spacing: -2px;">
-                    완료
+                	완료
                 </strong>
                 되었습니다.
             </div>
-            <a href="/orders/detail/${order.o_id}" style="margin: 0; padding: 0; border: 0; box-sizing: border-box; font-size: 14px; line-: 22px; font-family: '맑은고딕', 'malgun gothic', 'dotum', sans-serif; letter-spacing: -1px; display: inline-block; min-: 135px; :40 px; margin: 19px 0 0; padding: 8px 15px 10px; border-radius: 5px; border: 0; background: #7B68EE; color: #fff; font-size: 16px; line-: 22px; letter-spacing: -1px; font-family: 'nanumbarungothicbold'; font-weight: bold; cursor: pointer; text-decoration: none; text-align: center;">
+            <router-link :to="`/orders/` + order.id" style="margin: 0; padding: 0; border: 0; box-sizing: border-box; font-size: 14px; line-: 22px; font-family: '맑은고딕', 'malgun gothic', 'dotum', sans-serif; letter-spacing: -1px; display: inline-block; min-: 135px; :40 px; margin: 19px 0 0; padding: 8px 15px 10px; border-radius: 5px; border: 0; background: #7B68EE; color: #fff; font-size: 16px; line-: 22px; letter-spacing: -1px; font-family: 'nanumbarungothicbold'; font-weight: bold; cursor: pointer; text-decoration: none; text-align: center;">
                 주문내역조회
-            </a>
+            </router-link>
         </div>
     </div>
 
@@ -41,7 +41,7 @@
 						</th>
 						<td
 							style="width: 558px; border: 0; box-sizing: border-box; font-size: 14px; line-height: 22px; font-family: '맑은고딕', 'Malgun Gothic', 'dotum', sans-serif; letter-spacing: -1px; padding: 14px 0 16px 16px; line-height: 20px; color: #333; border-bottom: 1px solid #e6e6e6;">
-							<c:out value="${member.name}"/>
+							{{member.name}}
 						</td>
 					</tr>
 					<tr>
@@ -53,7 +53,7 @@
 							style="width: 558px; border: 0; box-sizing: border-box; font-size: 14px; line-height: 22px; font-family: '맑은고딕', 'Malgun Gothic', 'dotum', sans-serif; letter-spacing: -1px; padding: 14px 0 16px 16px; line-height: 20px; color: #333; border-bottom: 1px solid #e6e6e6;">
 							<strong
 								style="margin: 0; padding: 0; border: 0; box-sizing: border-box; font-size: 14px; line-height: 22px; font-family: '맑은고딕', 'Malgun Gothic', 'dotum', sans-serif; letter-spacing: -1px; color: #666;">
-								<c:out value="${order.orders_date}"/>
+								{{order.orders_date}}
 							</strong>
 						</td>
 					</tr>
@@ -66,7 +66,7 @@
 							style="width: 558px; border: 0; box-sizing: border-box; font-size: 14px; line-height: 22px; font-family: '맑은고딕', 'Malgun Gothic', 'dotum', sans-serif; letter-spacing: -1px; padding: 14px 0 16px 16px; line-height: 20px; color: #333; border-bottom: 1px solid #e6e6e6;">
 							<strong
 								style="margin: 0; padding: 0; border: 0; box-sizing: border-box; font-size: 14px; line-height: 22px; font-family: '맑은고딕', 'Malgun Gothic', 'dotum', sans-serif; letter-spacing: -1px; color: #7B68EE; letter-spacing: 0;">
-								<c:out value="${order.o_id}"/>
+								{{order.id}}
 							</strong>
 						</td>
 					</tr>
@@ -79,50 +79,47 @@
 			배송상품 정보
 		</div>
 
-		<c:forEach items="${order.orderDetailList}" var="detail">
-		
-			<div style="overflow: hidden; margin: 0 20px;">
-				<a target="_blank"
-					style="float: left; :70 px; :70 px; margin: 20px 0;"
-					href="" id="productImg">
-					<img
-						style="border: 0; width: 70px; height: 70px;"
-						src="<c:out value='${detail.productDTO.img_url}'/>"
-						alt="">
-				</a>
-				<form action="/product/detail" method="get" id="getForm">
-					<input type="hidden" name="p_id" value="${detail.p_id}"/>
-				</form>
+
+		<div style="overflow: hidden; margin: 0 20px;"
+			v-for="detail in orderDetails" :key="detail.productDTO.id">
+			<router-link target="_blank"
+				style="float: left; :70 px; :70 px; margin: 20px 0;"
+				:to="`/products/` + detail.productDTO.id" id="productImg">
+				<img
+					style="border: 0; width: 70px; height: 70px;"
+					:src='`https://img-cf.kurly.com/shop/data/goods/${detail.productDTO.img_url}`'
+					alt="">
+			</router-link>
+
+			<div
+				style="float: left; width: 68%; margin: 0 0 0 15px; padding: 17px 0 15px;">
+				<router-link target="_blank"
+					style="color: #333; font-size: 15px; line-: 18px; display: block; text-decoration: none; overflow: hidden; text-overflow: ellipsis; display: -webkit-box; :36 px; -webkit-box-orient: vertical; -webkit-line-clamp: 2; font-family: '맑은고딕', 'malgun gothic', 'dotum', sans-serif;"
+					:to="`/products/` + detail.productDTO.id">
+					{{detail.productDTO.brand}}<br>{{detail.productDTO.name}}
+				</router-link>
 				<div
-					style="float: left; width: 68%; margin: 0 0 0 15px; padding: 17px 0 15px;">
-					<a target="_blank"
-						style="color: #333; font-size: 15px; line-: 18px; display: block; text-decoration: none; overflow: hidden; text-overflow: ellipsis; display: -webkit-box; :36 px; -webkit-box-orient: vertical; -webkit-line-clamp: 2; font-family: '맑은고딕', 'malgun gothic', 'dotum', sans-serif;"
-						href="https://m.oliveyoung.co.kr/m/goods/getGoodsDetail.do?goodsNo=A000000007088">
-						<c:out value="${detail.productDTO.brand}"/><br><c:out value="${detail.productDTO.name}"/>
-					</a>
-					<div
-						style="color: #999; font-size: 12px; line-height: 16px; font-weight: bold;">
-					</div>
-					<div
-						style="color: #999; font-size: 12px; line-height: 16px; font-weight: bold;">
-						구매수량 : ${detail.quantity} 개
-					</div>
-					<div style="padding: 4px 0 0;">
-	
-						<span
-							style="color: #333; font-size: 20px; font-weight: bold; padding: 0 0 0 7px;">
-							<fmt:formatNumber type="number" maxFractionDigits="3" value="${detail.productDTO.price * detail.quantity}" />
-							<em
-								style="display: inline-block; color: #b0b0b0; font-style: normal; font-size: 12px; vertical-align: 1px; color: #333 !important; padding: 0 0 0 2px; vertical-align: 2px !important;">
-								원
-							</em>
-						</span>
-						
-					</div>
+					style="color: #999; font-size: 12px; line-height: 16px; font-weight: bold;">
+				</div>
+				<div
+					style="color: #999; font-size: 12px; line-height: 16px; font-weight: bold;">
+					구매수량 : {{detail.quantity}} 개
+				</div>
+				<div style="padding: 4px 0 0;">
+
+					<span
+						style="color: #333; font-size: 20px; font-weight: bold; padding: 0 0 0 7px;">
+						{{detail.productDTO.price * detail.quantity}}
+						<em
+							style="display: inline-block; color: #b0b0b0; font-style: normal; font-size: 12px; vertical-align: 1px; color: #333 !important; padding: 0 0 0 2px; vertical-align: 2px !important;">
+							원
+						</em>
+					</span>
+					
 				</div>
 			</div>
+		</div>
 		
-		</c:forEach>
 
 		<div
 			style="margin: 0; padding: 0; border: 0; box-sizing: border-box; font-size: 14px; line-height: 22px; font-family: '맑은고딕', 'Malgun Gothic', 'dotum', sans-serif; letter-spacing: -1px; margin: 0; padding: 0; border: 0; box-sizing: border-box; font-family: '맑은고딕', 'Malgun Gothic', 'dotum', sans-serif; letter-spacing: -1px; word-spacing: -2px; margin: 0 20px; padding: 25px 0 9px; border-bottom: 2px solid #666; color: #333; font-size: 16px; font-weight: bold;">
@@ -148,7 +145,7 @@
 						</th>
 						<td
 							style="width: 558px; border: 0; box-sizing: border-box; font-size: 14px; line-height: 22px; font-family: '맑은고딕', 'Malgun Gothic', 'dotum', sans-serif; letter-spacing: -1px; padding: 14px 0 16px 16px; line-height: 20px; color: #333; border-bottom: 1px solid #e6e6e6;">
-							<c:out value="${member.name}"/>
+							{{member.name}}
 						</td>
 					</tr>
 					<tr>
@@ -160,7 +157,7 @@
 							style="width: 558px; border: 0; box-sizing: border-box; font-size: 14px; line-height: 22px; font-family: '맑은고딕', 'Malgun Gothic', 'dotum', sans-serif; letter-spacing: -1px; padding: 14px 0 16px 16px; line-height: 20px; color: #333; border-bottom: 1px solid #e6e6e6;">
 							<span
 								style="margin: 0; padding: 0; border: 0; box-sizing: border-box; font-size: 14px; line-height: 22px; font-family: '맑은고딕', 'Malgun Gothic', 'dotum', sans-serif; letter-spacing: -1px; letter-spacing: 0;">
-								<c:out value="${member.phone}"/>
+								{{member.phone}}
 							</span>
 						</td>
 					</tr>
@@ -171,7 +168,7 @@
 						</th>
 						<td
 							style="width: 558px; border: 0; box-sizing: border-box; font-size: 14px; line-height: 22px; font-family: '맑은고딕', 'Malgun Gothic', 'dotum', sans-serif; letter-spacing: -1px; padding: 14px 0 16px 16px; line-height: 20px; color: #333; border-bottom: 1px solid #e6e6e6;">
-							주소 : <c:out value="${member.address}"/>
+							주소 : {{member.address}}
 						</td>
 					</tr>
 					<tr>
@@ -181,7 +178,7 @@
 						</th>
 						<td
 							style="width: 558px; border: 0; box-sizing: border-box; font-size: 14px; line-height: 22px; font-family: '맑은고딕', 'Malgun Gothic', 'dotum', sans-serif; letter-spacing: -1px; padding: 14px 0 16px 16px; line-height: 20px; color: #333; border-bottom: 1px solid #e6e6e6;">
-							<c:out value="${msg}"/>
+							{{msg}}
 						</td>
 					</tr>
 				</tbody>
@@ -204,7 +201,7 @@
 					</strong>
 					<span
 						style="margin: 0; padding: 0; border: 0; box-sizing: border-box; font-size: 14px; line-height: 22px; font-family: '맑은고딕', 'Malgun Gothic', 'dotum', sans-serif; letter-spacing: -1px; float: right; color: #f47330; font-weight: bold; font-size: 16px; letter-spacing: 0;">
-						<fmt:formatNumber type="number" maxFractionDigits="3" value="${order.price}" />
+						{{order.price}}
 						<em
 							style="margin: 0; padding: 0; border: 0; box-sizing: border-box; font-size: 14px; line-height: 22px; font-family: '맑은고딕', 'Malgun Gothic', 'dotum', sans-serif; letter-spacing: -1px; display: inline-block; margin-left: 3px; font-style: normal; font-weight: bold; font-size: 12px; vertical-align: 2px; letter-spacing: -1px;">
 							원
@@ -225,7 +222,7 @@
 					</strong>
 					<span
 						style="margin: 0; padding: 0; border: 0; box-sizing: border-box; font-size: 14px; line-height: 22px; font-family: '맑은고딕', 'Malgun Gothic', 'dotum', sans-serif; letter-spacing: -1px; float: right; color: #f47330; font-weight: bold; font-size: 16px; letter-spacing: 0;">
-						- <c:out value="${usePoint}"/>
+						- {{usePoint}}
 						<em
 							style="margin: 0; padding: 0; border: 0; box-sizing: border-box; font-size: 14px; line-height: 22px; font-family: '맑은고딕', 'Malgun Gothic', 'dotum', sans-serif; letter-spacing: -1px; display: inline-block; margin-left: 3px; font-style: normal; font-weight: bold; font-size: 12px; vertical-align: 2px; letter-spacing: -1px;">
 							원
@@ -245,7 +242,7 @@
 					</strong>
 					<span
 						style="margin: 0; padding: 0; border: 0; box-sizing: border-box; font-size: 14px; line-height: 22px; font-family: '맑은고딕', 'Malgun Gothic', 'dotum', sans-serif; letter-spacing: -1px; float: right; color: #ff2828; font-weight: bold; font-size: 28px; line-height: 38px; letter-spacing: 0;">
-						<fmt:formatNumber type="number" maxFractionDigits="3" value="${payment.payment_amount}" />
+						{{payment.payment_amount}}
 						<em
 							style="margin: 0; padding: 0; border: 0; box-sizing: border-box; font-size: 14px; line-height: 22px; font-family: '맑은고딕', 'Malgun Gothic', 'dotum', sans-serif; letter-spacing: -1px; display: inline-block; margin-left: 3px; font-style: normal; font-weight: bold; font-size: 12px; vertical-align: 2px; letter-spacing: -1px;">
 							원
@@ -266,16 +263,16 @@
 					<span
 						style="margin: 0; padding: 0; border: 0; box-sizing: border-box; font-size: 14px; line-height: 22px; font-family: '맑은고딕', 'Malgun Gothic', 'dotum', sans-serif; letter-spacing: -1px; float: right; font-size: 12px; font-weight: bold; text-align: right;">
 
-						<c:out value="${payment.method}"/>
+						{{payment.method}}
 						<em
 							style="margin: 0; padding: 0; border: 0; box-sizing: border-box; font-size: 14px; line-height: 22px; font-family: '맑은고딕', 'Malgun Gothic', 'dotum', sans-serif; letter-spacing: -1px; display: block; font-style: normal; letter-spacing: -0.5px;">
 
-							<c:if test="${payment.method eq '카드'}">
-								일시불(<fmt:formatDate pattern="yyyy-MM-dd" value="${order.orders_date}" />)
-							</c:if>
-							<c:if test="${payment.method eq '계좌이체'}">
-								입금 완료(<fmt:formatDate pattern="yyyy-MM-dd" value="${order.orders_date}" />)
-							</c:if>
+							<p v-if="1 == 1">
+								일시불({{order.orders_date}})
+							</p>
+							<p v-else-if="1 != 1">
+								입금 완료({{order.orders_date}})
+							</p>
 						</em>
 					</span>
 				</div>
@@ -285,14 +282,41 @@
 </template>
 
 <script>
+import {ref} from 'vue';
 export default {
+	setup(){
+		const member = ref(
+			{id: 1, name: '홍길동', email: 'kosa@metanet.com', phone: '010-1234-5678', address: '서울', point: 20000}
+		);
+		const products = ref([
+			{id: 1, brand: '스윗밸런스', price: 5900, name: '오늘의 샐러드', img_url: '1655775819130l0.jpg', quantity: 2}
+		]);
+		const order = ref(
+			{id: 1, orders_date: '2023-02-22', status: '배송완료', total_amount: 2, price: 11800, m_id: 1}
+		);
+		const orderDetails = ref([
+			{o_id: 1, quantity: 2, productDTO: {id: 1, brand: '스윗밸런스', price: 5900, name: '오늘의 샐러드', img_url: '1655775819130l0.jpg', quantity: 2}}
+		]);
+		const payment = ref(
+			{id: 1, o_id: 1, m_id: 1, method: '카드', payment_amount: 11800}
+		);
+		const usePoint = ref(0);
+    	const totalPrice = ref(products.value[0].price * products.value[0].quantity);
+		const msg = ref('');
 
+		return{
+			member,
+			order,
+			orderDetails,
+			payment,
+			usePoint,
+			totalPrice,
+		}
+	}
+	
 }
 </script>
 
 <style>
-div.contents{
-    width: 76%;
-    margin: auto;
-}
+
 </style>
