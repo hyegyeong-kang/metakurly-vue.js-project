@@ -7,7 +7,7 @@
           <ul class="navbar-nav ml-lg-4 pt-3 pt-lg-0">
             <li class="nav-item"><router-link class="nav-link" :to="{name: 'Home'}">홈</router-link></li>
             <!-- <li class="nav-item"><router-link class="nav-link" :to="{name: 'ProductsBestList'}">베스트</router-link></li> -->
-            <li class="nav-item"><router-link class="nav-link" to="/productsBestList">베스트</router-link></li>
+            <li class="nav-item"><router-link class="nav-link" to="/products/bestList">베스트</router-link></li>
             <!-- <li class="nav-item"><router-link class="nav-link" :to="{name: 'ProductsList'}">모든상품</router-link></li> -->
             <li class="nav-item"><router-link class="nav-link" to="/products">모든상품</router-link></li>
             <!-- <li class="nav-item"><router-link class="nav-link" :to="{name: 'MemberMyPage'}">마이페이지</router-link></li> -->

@@ -23,12 +23,12 @@
 			           	 	 <li>✔︎ 브랜드 : {{productDetail.brand}}</li>   
 				           	 <li>✔︎ 상품명 : {{productDetail.name}}</li>
 				           	 <li>✔︎ 배송타입 : {{productDetail.delivery_type}}</li>
-				      	     <li>✔︎ 작성일 : {{review.review_date}}</li>
+				      	     <li>✔︎ 작성일 : {{reviewDetail.review_date}}</li>
 			           	 </ul>
 		                <span class="author"></span>
 		                </blockquote>
 		                <img alt="" style="margin:20px" v-bind:src="productDetail.img_url">
-		                <p>{{review.contents}}</p>
+		                <p>{{reviewDetail.contents}}</p>
 		              </div>
 	              </c:forEach>
             </div>
@@ -215,34 +215,57 @@
 
 <script>
 import { ref } from 'vue'
+import {useRoute} from 'vue-router';
+import axios from 'axios';
 
 export default{ 
     setup() {
         const product = ref('');
+        const route = useRoute();
+        const p_id = route.params.p_id;
+        const r_id = route.params.r_id;
         
-        const review = ref({
-            p_id: 1 ,
-            m_id: 1 , 
-            r_id: 1 , 
-            contents:'또 먹고싶은 맛이에요. 해장으로 딱이고, 매운거 좋아하는 사람한테 딱입니다.원래 댓글같은거 잘 안남기는데 이번에는 가격도 착하고, 맛도 너무 있어서 처음으로 리뷰 남겨요^^' , 
-            review_date: '2023-03-23'
+        const reviewDetail = ref({
+            // p_id: 1 ,
+            // m_id: 1 , 
+            // r_id: 1 , 
+            // contents:'또 먹고싶은 맛이에요. 해장으로 딱이고, 매운거 좋아하는 사람한테 딱입니다.원래 댓글같은거 잘 안남기는데 이번에는 가격도 착하고, 맛도 너무 있어서 처음으로 리뷰 남겨요^^' , 
+            // review_date: '2023-03-23'
         });
 
         const productDetail = ref({
-            p_id: 1, 
-            brand: '홍대주꾸미', 
-            price: 6600, 
-            name: '주꾸미 볶음', 
-            stock: 2300, 
-            delivery_type: '깜깜배송', 
-            sales_amount: 1500, 
-            img_url: 'https://img-cf.kurly.com/cdn-cgi/image/quality=85,width=400/shop/data/goods/1653034699910l0.jpeg'
+            // p_id: 1, 
+            // brand: '홍대주꾸미', 
+            // price: 6600, 
+            // name: '주꾸미 볶음', 
+            // stock: 2300, 
+            // delivery_type: '깜깜배송', 
+            // sales_amount: 1500, 
+            // img_url: 'https://img-cf.kurly.com/cdn-cgi/image/quality=85,width=400/shop/data/goods/1653034699910l0.jpeg'
         });
+
+        const reviewDetailPage = async () => {
+          console.log("ok");
+          console.log("p_id!!!!!~~~~~ : " + p_id);
+            console.log("r_id !!!!!!!!!!~~~ : " + r_id);
+          try {
+            console.log("p_id!!!!!~~~~~ : " + p_id);
+            console.log("r_id !!!!!!!!!!~~~ : " + r_id);
+            const res = await axios.get(`/products/${p_id}/reviews/${r_id}`);
+            reviewDetail.value = {...res.data.productReview};
+            productDetail.value = {...res.data.productDTO};
+            console.log(res);
+          } catch(err) {
+            console.log(err);
+          }
+        }
+
+        reviewDetailPage();
 
         return {
             product,
             productDetail,
-            review,
+            reviewDetail
         }
     }
 }

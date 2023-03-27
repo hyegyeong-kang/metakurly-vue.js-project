@@ -23,10 +23,11 @@
                                     <td>작성일</td>
                                 </thead>
                                  <tbody :value="review.r_id" :key="review.r_id" v-for="review in reviews">
-                                    <td>{{review.r_id}}</td>
-                                    <td>{{review.m_id}}</td>
-                                    <td><router-link :to="{path:'/products/review/'+review.r_id}">{{review.contents}}</router-link></td>
-                                    <td>{{review.review_date}}</td>
+                                        <td>{{review.r_id}}</td>
+                                        <td>{{review.m_id}}</td>
+                                        <!-- <td><router-link :to="{path:'/products/review/'+review.r_id}">{{review.contents}}</router-link></td> -->
+                                        <td @click="moveToReviewDetailPage(review.r_id, review.p_id)">{{review.contents}}</td>
+                                        <td>{{review.review_date}}</td>
                                 </tbody>
                             </table>
                         </ul>    
@@ -53,19 +54,54 @@
 </template>
 
 <script>
-import { ref } from 'vue'
+import { ref } from 'vue';
+import axios from 'axios';
+import {useRoute, useRouter} from 'vue-router';
+
 export default {
     setup() {
         const review = ref('');
         const reviews = ref([
-            {p_id: 1 , m_id: 1 , r_id: 1 , contents:'살쪘어요' , review_date: '2023-03-23'},
-            {p_id: 1 , m_id: 2 , r_id: 2 , contents:'맛있어요' , review_date: '2023-03-23'},
-            {p_id: 1 , m_id: 3 , r_id: 3 , contents:'배고파요' , review_date: '2023-03-23'}
+            // {p_id: 1 , m_id: 1 , r_id: 1 , contents:'살쪘어요' , review_date: '2023-03-23'},
+            // {p_id: 1 , m_id: 2 , r_id: 2 , contents:'맛있어요' , review_date: '2023-03-23'},
+            // {p_id: 1 , m_id: 3 , r_id: 3 , contents:'배고파요' , review_date: '2023-03-23'}
         ]);
+
+        const route = useRoute();
+        const router = useRouter();
+        const pid = route.params.id;
+
+        const moveToReviewDetailPage = (reviewId, productId) => {
+            console.log('reviewId : ' + reviewId);
+            console.log('productId : ' + productId);
+
+            router.push({
+                name: 'ProductReviewDetail',
+                params: {
+                    r_id: reviewId,
+                    p_id: productId
+                }
+            });
+        }
+
+        const reviewsPage = async () => {
+          console.log("ok");
+          console.log('pid !!!!!!! :' + pid);
+          try {
+            const res = await axios.get(`/products/${pid}/reviews`);
+            reviews.value = {...res.data};
+            console.log(res);
+          } catch(err) {
+            console.log(err);
+          }
+        }
+        
+        reviewsPage();
 
         return {
             review,
             reviews,
+            moveToReviewDetailPage,
         }
     }
 }
@@ -73,7 +109,7 @@ export default {
 
 <style scoped>
 /*  폰트 적용 */
-@import url(http://merongshop.com/ind-script/optimizer.php?filename=tZVBUsUgDIb3rVvPEauXeCsXegIKsTACYZLg2NvLe-3CmbdxKl2Syf_9mSQAeEoI0zNDYVrYJGAUqmwRrAh8MGUFSylRfmiBR_hLPtpBKFYNlIeZvg8Kq-pR02hW5GNSNXPEX1K0YxVkgYQtdxFP5WmCUucY7Og1RRCHo0MJSwb5DPllupETuRqxqdKMDJGWkDtS16sCiB3yJYgSr6_Uw6M1jqrCbCTYm-Hd6LtQt0BvahtjO-BQw1lkJYoayll4j_E0dlt_V-1pPS-mLZ9RPK3zZj4LfffQ_PNy7kaptlW5at99KCXkpZ_DPksQNGy9M2q6V28pfzVIexGL7Q7f639Di1m707euXNC47Q_4AQ&type=css&k=2485782bee608c5c4b65c94c695d14109bd58bf6&t=1540974567);
+/* @import url(http://merongshop.com/ind-script/optimizer.php?filename=tZVBUsUgDIb3rVvPEauXeCsXegIKsTACYZLg2NvLe-3CmbdxKl2Syf_9mSQAeEoI0zNDYVrYJGAUqmwRrAh8MGUFSylRfmiBR_hLPtpBKFYNlIeZvg8Kq-pR02hW5GNSNXPEX1K0YxVkgYQtdxFP5WmCUucY7Og1RRCHo0MJSwb5DPllupETuRqxqdKMDJGWkDtS16sCiB3yJYgSr6_Uw6M1jqrCbCTYm-Hd6LtQt0BvahtjO-BQw1lkJYoayll4j_E0dlt_V-1pPS-mLZ9RPK3zZj4LfffQ_PNy7kaptlW5at99KCXkpZ_DPksQNGy9M2q6V28pfzVIexGL7Q7f639Di1m707euXNC47Q_4AQ&type=css&k=2485782bee608c5c4b65c94c695d14109bd58bf6&t=1540974567); */
 
 html {
     font-family: "dotum, Verdana, Dotum, AppleGothic", sans-serif

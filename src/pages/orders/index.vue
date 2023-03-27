@@ -262,15 +262,15 @@ export default {
     }
 
     const doPay = async () => {
-      const res = await axios.post('/success', {
-        deliveryMsg: msg.value,
-        p_id: ,
-        quantity: ,
-        totalPrice: totalPrice.value,
-        method: togglePayMethod,
-        payment_amount: paymentAmount.value,
-        usePoint: usePoint.value
-      });
+      // const res = await axios.post('/success', {
+      //   deliveryMsg: msg.value,
+      //   p_id: ,
+      //   quantity: ,
+      //   totalPrice: totalPrice.value,
+      //   method: togglePayMethod,
+      //   payment_amount: paymentAmount.value,
+      //   usePoint: usePoint.value
+      // });
       router.push({
         name: 'OrderSuccess'
       });

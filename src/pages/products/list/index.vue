@@ -7,10 +7,10 @@
               <nav aria-label="Breadcrumb">
                 <ul class="breadcrumb justify-content-center py-0 bg-transparent">
                   <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                  <li class="breadcrumb-item active">Best 100</li>
+                  <li class="breadcrumb-item active">All Products</li>
                 </ul>
               </nav>
-              <h1 class="text-center">Best Products</h1>
+              <h1 class="text-center">All Products</h1>
             </div>
           </div>
         </div>
@@ -43,34 +43,48 @@
 
 <script>
 import {ref} from 'vue'; 
+import axios from 'axios';
 
 export default {
   setup() {
     const product = ref('');
     const products = ref([
-      {p_id: 1, brand: '홍대주꾸미', price: 6600, name: '주꾸미 볶음', stock: 2300, delivery_type: '깜깜배송', sales_amount: 1500, img_url: 'https://img-cf.kurly.com/cdn-cgi/image/quality=85,width=400/shop/data/goods/1653034699910l0.jpeg'},
-      {p_id: 2, brand: '스윗밸런스', price: 5900, name: '오늘의 샐러드', stock: 1000, delivery_type: '깜깜배송', sales_amount: 5152, img_url: 'https://img-cf.kurly.com/cdn-cgi/image/quality=85,width=676/shop/data/goods/1655775819130l0.jpg'}
-      ,
-      {p_id: 2, brand: '스윗밸런스', price: 5900, name: '오늘의 샐러드', stock: 1000, delivery_type: '깜깜배송', sales_amount: 5152, img_url: 'https://img-cf.kurly.com/cdn-cgi/image/quality=85,width=676/shop/data/goods/1655775819130l0.jpg'}
-      ,
-      {p_id: 2, brand: '스윗밸런스', price: 5900, name: '오늘의 샐러드', stock: 1000, delivery_type: '깜깜배송', sales_amount: 5152, img_url: 'https://img-cf.kurly.com/cdn-cgi/image/quality=85,width=676/shop/data/goods/1655775819130l0.jpg'}
-      ,
-      {p_id: 2, brand: '스윗밸런스', price: 5900, name: '오늘의 샐러드', stock: 1000, delivery_type: '깜깜배송', sales_amount: 5152, img_url: 'https://img-cf.kurly.com/cdn-cgi/image/quality=85,width=676/shop/data/goods/1655775819130l0.jpg'}
-      ,
-      {p_id: 2, brand: '스윗밸런스', price: 5900, name: '오늘의 샐러드', stock: 1000, delivery_type: '깜깜배송', sales_amount: 5152, img_url: 'https://img-cf.kurly.com/cdn-cgi/image/quality=85,width=676/shop/data/goods/1655775819130l0.jpg'}
-      ,
-      {p_id: 2, brand: '스윗밸런스', price: 5900, name: '오늘의 샐러드', stock: 1000, delivery_type: '깜깜배송', sales_amount: 5152, img_url: 'https://img-cf.kurly.com/cdn-cgi/image/quality=85,width=676/shop/data/goods/1655775819130l0.jpg'}
-      ,
-      {p_id: 2, brand: '스윗밸런스', price: 5900, name: '오늘의 샐러드', stock: 1000, delivery_type: '깜깜배송', sales_amount: 5152, img_url: 'https://img-cf.kurly.com/cdn-cgi/image/quality=85,width=676/shop/data/goods/1655775819130l0.jpg'}
-      ,
-      {p_id: 2, brand: '스윗밸런스', price: 5900, name: '오늘의 샐러드', stock: 1000, delivery_type: '깜깜배송', sales_amount: 5152, img_url: 'https://img-cf.kurly.com/cdn-cgi/image/quality=85,width=676/shop/data/goods/1655775819130l0.jpg'}
-      ,
-      {p_id: 2, brand: '스윗밸런스', price: 5900, name: '오늘의 샐러드', stock: 1000, delivery_type: '깜깜배송', sales_amount: 5152, img_url: 'https://img-cf.kurly.com/cdn-cgi/image/quality=85,width=676/shop/data/goods/1655775819130l0.jpg'}
-      ,
-      {p_id: 2, brand: '스윗밸런스', price: 5900, name: '오늘의 샐러드', stock: 1000, delivery_type: '깜깜배송', sales_amount: 5152, img_url: 'https://img-cf.kurly.com/cdn-cgi/image/quality=85,width=676/shop/data/goods/1655775819130l0.jpg'}
-      ,
-      {p_id: 2, brand: '스윗밸런스', price: 5900, name: '오늘의 샐러드', stock: 1000, delivery_type: '깜깜배송', sales_amount: 5152, img_url: 'https://img-cf.kurly.com/cdn-cgi/image/quality=85,width=676/shop/data/goods/1655775819130l0.jpg'}
+      // {p_id: 1, brand: '홍대주꾸미', price: 6600, name: '주꾸미 볶음', stock: 2300, delivery_type: '깜깜배송', sales_amount: 1500, img_url: 'https://img-cf.kurly.com/cdn-cgi/image/quality=85,width=400/shop/data/goods/1653034699910l0.jpeg'},
+      // {p_id: 2, brand: '스윗밸런스', price: 5900, name: '오늘의 샐러드', stock: 1000, delivery_type: '깜깜배송', sales_amount: 5152, img_url: 'https://img-cf.kurly.com/cdn-cgi/image/quality=85,width=676/shop/data/goods/1655775819130l0.jpg'}
+      // ,
+      // {p_id: 2, brand: '스윗밸런스', price: 5900, name: '오늘의 샐러드', stock: 1000, delivery_type: '깜깜배송', sales_amount: 5152, img_url: 'https://img-cf.kurly.com/cdn-cgi/image/quality=85,width=676/shop/data/goods/1655775819130l0.jpg'}
+      // ,
+      // {p_id: 2, brand: '스윗밸런스', price: 5900, name: '오늘의 샐러드', stock: 1000, delivery_type: '깜깜배송', sales_amount: 5152, img_url: 'https://img-cf.kurly.com/cdn-cgi/image/quality=85,width=676/shop/data/goods/1655775819130l0.jpg'}
+      // ,
+      // {p_id: 2, brand: '스윗밸런스', price: 5900, name: '오늘의 샐러드', stock: 1000, delivery_type: '깜깜배송', sales_amount: 5152, img_url: 'https://img-cf.kurly.com/cdn-cgi/image/quality=85,width=676/shop/data/goods/1655775819130l0.jpg'}
+      // ,
+      // {p_id: 2, brand: '스윗밸런스', price: 5900, name: '오늘의 샐러드', stock: 1000, delivery_type: '깜깜배송', sales_amount: 5152, img_url: 'https://img-cf.kurly.com/cdn-cgi/image/quality=85,width=676/shop/data/goods/1655775819130l0.jpg'}
+      // ,
+      // {p_id: 2, brand: '스윗밸런스', price: 5900, name: '오늘의 샐러드', stock: 1000, delivery_type: '깜깜배송', sales_amount: 5152, img_url: 'https://img-cf.kurly.com/cdn-cgi/image/quality=85,width=676/shop/data/goods/1655775819130l0.jpg'}
+      // ,
+      // {p_id: 2, brand: '스윗밸런스', price: 5900, name: '오늘의 샐러드', stock: 1000, delivery_type: '깜깜배송', sales_amount: 5152, img_url: 'https://img-cf.kurly.com/cdn-cgi/image/quality=85,width=676/shop/data/goods/1655775819130l0.jpg'}
+      // ,
+      // {p_id: 2, brand: '스윗밸런스', price: 5900, name: '오늘의 샐러드', stock: 1000, delivery_type: '깜깜배송', sales_amount: 5152, img_url: 'https://img-cf.kurly.com/cdn-cgi/image/quality=85,width=676/shop/data/goods/1655775819130l0.jpg'}
+      // ,
+      // {p_id: 2, brand: '스윗밸런스', price: 5900, name: '오늘의 샐러드', stock: 1000, delivery_type: '깜깜배송', sales_amount: 5152, img_url: 'https://img-cf.kurly.com/cdn-cgi/image/quality=85,width=676/shop/data/goods/1655775819130l0.jpg'}
+      // ,
+      // {p_id: 2, brand: '스윗밸런스', price: 5900, name: '오늘의 샐러드', stock: 1000, delivery_type: '깜깜배송', sales_amount: 5152, img_url: 'https://img-cf.kurly.com/cdn-cgi/image/quality=85,width=676/shop/data/goods/1655775819130l0.jpg'}
+      // ,
+      // {p_id: 2, brand: '스윗밸런스', price: 5900, name: '오늘의 샐러드', stock: 1000, delivery_type: '깜깜배송', sales_amount: 5152, img_url: 'https://img-cf.kurly.com/cdn-cgi/image/quality=85,width=676/shop/data/goods/1655775819130l0.jpg'}
     ]);
+
+    const allProductPage = async () => {
+      console.log("ok");
+      try{
+        const res = await axios.get('/products');
+        products.value = {...res.data};
+        console.log(res);
+      } catch(err) {
+        console.log(err);
+      }
+    }
+
+    allProductPage();
 
     return {
       product,
