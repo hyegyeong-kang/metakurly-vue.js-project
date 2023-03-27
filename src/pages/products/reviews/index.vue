@@ -26,7 +26,7 @@
                                         <td>{{review.r_id}}</td>
                                         <td>{{review.m_id}}</td>
                                         <!-- <td><router-link :to="{path:'/products/review/'+review.r_id}">{{review.contents}}</router-link></td> -->
-                                        <td @click="moveToReviewDetailPage(review.r_id, review.p_id)">{{review.contents}}</td>
+                                        <td @click="moveToReviewDetailPage(review.r_id, review.p_id)">{{review.contents.substring(0,10)}}...</td>
                                         <td>{{review.review_date}}</td>
                                 </tbody>
                             </table>
