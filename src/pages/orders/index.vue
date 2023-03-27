@@ -214,7 +214,7 @@
       </div>
       <input type="hidden" name="payment_amount" id="paymentAmountInput" v-model="paymentAmount"/>
       <input type="hidden" name="usePoint" id="usePointInput" v-model="usePoint"/>
-      <button type="submit" id="paymentBtn" @click="orderSuccess">
+      <button type="submit" id="paymentBtn">
         결제하기
       </button>
     </div>
@@ -224,7 +224,7 @@
 <script>
 import {useRouter} from 'vue-router';
 import {ref} from 'vue';
-// import axios from "axios";
+import axios from "axios";
 export default {
   setup(){
     const router = useRouter();
@@ -262,15 +262,15 @@ export default {
     }
 
     const doPay = async () => {
-      // const res = await axios.post('/success', {
-      //   deliveryMsg: msg.value,
-      //   p_id: ,
-      //   quantity: ,
-      //   totalPrice: totalPrice.value,
-      //   method: togglePayMethod,
-      //   payment_amount: paymentAmount.value,
-      //   usePoint: usePoint.value
-      // });
+      const res = await axios.post('/success', {
+        deliveryMsg: msg.value,
+        p_id: ,
+        quantity: ,
+        totalPrice: totalPrice.value,
+        method: togglePayMethod,
+        payment_amount: paymentAmount.value,
+        usePoint: usePoint.value
+      });
       router.push({
         name: 'OrderSuccess'
       });
