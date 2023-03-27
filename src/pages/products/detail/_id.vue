@@ -44,7 +44,7 @@
           <li class="active"><a href="">상품 정보</a></li>
           <!-- <li><a href="">상품 후기<span>(<span class="count">20</span>)</span></a></li> -->
           <!-- <li><router-link to="/products/reviews">상품 후기<span>(<span class="count">20</span>)</span></router-link></li> -->
-          <li @click="moveToProductReviewsPage(productDetail.p_id, index)"><a>상품 후기<span>(<span class="count">20</span>)</span></a></li>
+          <li @click="moveToProductReviewsPage(productDetail.p_id)"><a>상품 후기<span>(<span class="count">20</span>)</span></a></li>
           <li><a href="">Q & A <span></span></a></li>
           <li><a href="">반품 / 교환</a></li>
         </ul>
@@ -173,6 +173,7 @@ export default{
         const pid = route.params.id;
 
          const productDetailPage = async () => {
+          console.log("pid !!!!!!!!! : " + pid);
           console.log("ok");
           try {
             const res = await axios.get('/products/' + pid);

@@ -70,12 +70,12 @@ export default {
         const router = useRouter();
         const pid = route.params.id;
 
-        const riviewsPage = async () => {
+        const reviewsPage = async () => {
           console.log("ok");
           console.log('pid !!!!!!! :' + pid);
           try {
             // const res = await axios.get('/products/'+ pid+'/reviews');
-            const res = await axios.get('/products/1/reviews');
+            const res = await axios.get(`/products/${pid}/reviews`);
             reviews.value = {...res.data};
             console.log(res);
           } catch(err) {
@@ -83,7 +83,7 @@ export default {
           }
         }
         
-        riviewsPage();
+        reviewsPage();
 
         return {
             review,
