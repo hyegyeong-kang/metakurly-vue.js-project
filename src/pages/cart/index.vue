@@ -20,6 +20,7 @@
                     
   
                     <!--장바구니 리스트-->
+
                   <div v-for="(cart, index) in cartList" :key="cart.cartnum" >
                       <li class="cell">
                           <!--상품 체크박스 부분-->
@@ -47,7 +48,6 @@
                           </div>
                           <!--상품 갯수 변경하는 버튼과 상품 갯수에 따른 가격 변동-->
                           <div class="opt_info">
-                              
                               <div class="price_btn">
                                   <strong class="price_unit">{{ cart.productList[0].price}}</strong>원
                                   <input type="button" class="minus_btn" @click="minusBtn(cart)"> 
@@ -59,8 +59,6 @@
                                   <span type="button" @click="deleteBtn(cart, index)" class="del_li_btn"><img src="https://tictoc-web.s3.ap-northeast-2.amazonaws.com/web/img/icon/btn_del_circle.svg"></span>
                                 </span>
                               </div>
-  
-                              
                           </div>
                       </li>
                   </div> <!-- for 문 끝남 -->
@@ -94,43 +92,16 @@
   import { ref } from "vue";
   import axios from 'axios';
   export default {
-
-    data(){
-        return{
-             checkkk: []
-        };
-    },
     setup() {
       const cart = ref("");
+
       let count = ref(1);
       const cartList = ref([]);
-     // const selected = ref([]);
-      const cartA = ref([]);
       let allChecked = false;
-      
-  
-      let total = ref(0);
-  
-      const carts = ref({
-        cartnum: 1,
-        m_id: 1,
-        p_id: 1,
-        quantity: 9,
-      });
-  
-  
-        
-  
-      const products = ref([
-        // {p_id: 1, brand: '홍대주꾸미', price: 6600, name: '주꾸미 볶음', stock: 2300, delivery_type: '깜깜배송', sales_amount: 1500, img_url: 'https://img-cf.kurly.com/cdn-cgi/image/quality=85,width=400/shop/data/goods/1653034699910l0.jpeg'},
-        // {p_id: 2, brand: '스윗밸런스', price: 5900, name: '오늘의 샐러드', stock: 1000, delivery_type: '깜깜배송', sales_amount: 5152, img_url: 'https://img-cf.kurly.com/cdn-cgi/image/quality=85,width=676/shop/data/goods/1655775819130l0.jpg'}
-        // ,
-        // {p_id: 2, brand: '스윗밸런스', price: 5900, name: '오늘의 샐러드', stock: 1000, delivery_type: '깜깜배송', sales_amount: 5152, img_url: 'https://img-cf.kurly.com/cdn-cgi/image/quality=85,width=676/shop/data/goods/1655775819130l0.jpg'}
-      ]);
-  
-      const minusBtn = (cart) => {
-        console.log(`MINUS ${count}`)
 
+      let total = ref(0);
+
+      const minusBtn = (cart) => {
         return --cart.quantity;
         //   axios.patch('/cart/cartUpdate', {quantity: --count})
         //     .then(res => {
@@ -158,7 +129,7 @@
         console.log(`KANG$$$$$$$$$ ${typeof cartList.value[0]}`)
         delete cartList.value[index];
         console.log(`KANG999999999 ${JSON.stringify(cartList.value, null, 2)}`)
-      //  cartList.remove(cart);
+
       //  getTotalPrice(cartList.value);
        // console.log(`KANG33333333 ${JSON.stringify(cartList.value, null, 2)}`)
 
@@ -177,14 +148,10 @@
           await axios.get('/cart/cartList', {
             })
             .then((response) => {
-                
                 cartList.value = {...response.data}
-                console.log(`$$$$$$$$$$$$$$$$$$$$$ ${JSON.stringify(cartList.value, null, 2)}`);
-             //   this.cartList = response.data;
-             //Object.keys(cartList.value).length
 
-            console.log(`^^^^ ${Object.keys(cartList.value).length}`)
-            getTotalPrice(cartList.value);
+                console.log(`^^^^ ${Object.keys(cartList.value).length}`)
+                getTotalPrice(cartList.value);
             
             // for (let i = 0 ; i < Object.keys(cartList.value).length; i++) {
             //     console.log(`%%3%%  ${JSON.stringify(cartList.value[i].productList[0].price, null, 2)}`);
@@ -196,30 +163,22 @@
             // console.log(`TOTAL!!!!: ${total}` )
             // console.log(`TOTAL9999999999999: ${this.total}` )
             // this.total.value = total;
-            
-            
-                
-                
-                // list.forEach((cart) => {
-                //     console.log(`TOTAL: ${cart}`)
-                //     total += cart.value[0].productList[0].price; // 장바구니에 담긴 제품들 모두 합친 가격
-                // });
-               // this.total = total.value;
+
+            // list.forEach((cart) => {
+            //     console.log(`TOTAL: ${cart}`)
+            //     total += cart.value[0].productList[0].price; // 장바구니에 담긴 제품들 모두 합친 가격
+            // });
+            // this.total = total.value;
 
             })
             .finally(() => {
-                
             })
             .catch((error) => {
                 console.log(error);
             });
-
-            
-  
       };
 
       getCartProductList();
-
 
 
       const getTotalPrice = (cartListValue) => {
@@ -236,7 +195,6 @@
             return total;
        // this.total.value = total;
       }
-
 
 
       const checkedAll = (checked) => {
@@ -256,29 +214,20 @@
                 }
             }
       };
-  
-  
+
       return {
         cart,
         count,
-        carts,
-        products,
         minusBtn,
         plusBtn,
         deleteBtn,
         getCartProductList,
-  
         cartList,
         total,
-  
         selected,
-        cartA,
-
         checkedAll,
         allChecked,
         getTotalPrice,
-  
-  
       };
     },
   };
