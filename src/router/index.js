@@ -1,5 +1,8 @@
 import { createRouter, createWebHistory } from "vue-router";
 import Home from '../pages/index.vue';
+import Signup from '../pages/members/signup.vue';
+import Login from '../pages/members/login.vue';
+import Modify from '../pages/members/modify.vue';
 import Orders from '../pages/orders/index.vue';
 import OrdersList from '../pages/orders/list/index.vue';
 import OrderSuccess from '../pages/orders/success/index.vue';
@@ -17,6 +20,21 @@ const router = createRouter({
             path: '/',
             name: 'Home',
             component: Home
+        },
+        {
+            path: '/members/signup',
+            name: 'Signup',
+            component: Signup
+        },
+        {
+            path: '/members/login',
+            name: 'Login',
+            component: Login
+        },
+        {
+            path: '/members/modify',
+            name: 'Modify',
+            component: Modify
         },
         {
             path: '/orders',
