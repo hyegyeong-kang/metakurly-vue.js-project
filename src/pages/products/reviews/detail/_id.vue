@@ -264,7 +264,7 @@ export default{
         return {
             product,
             productDetail,
-            reviewDetail,
+            reviewDetail
         }
     }
 }
