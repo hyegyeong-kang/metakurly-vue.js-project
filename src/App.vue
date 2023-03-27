@@ -15,8 +15,8 @@
           </ul>
 
           <div class="ml-auto" v-if="IsNullMember">
-            <router-link class="btn btn-outline rounded-pill" to="/singup">회원가입</router-link>
-            <router-link class="btn btn-outline rounded-pill" to="/login">로그인</router-link>
+            <router-link class="btn btn-outline rounded-pill" :to="{name: 'Signup'}">회원가입</router-link>
+            <router-link class="btn btn-outline rounded-pill" :to="{name: 'Login'}">로그인</router-link>
           </div>
           <div class="ml-auto" v-else>
             <!-- <p>환영합니다! {{member.userId}} 님</p> -->
