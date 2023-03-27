@@ -1,13 +1,368 @@
 <template>
+    <link rel="stylesheet" href="/resources/css/cart/cart.css">
+        <div class="page-section">
+          <div class="container">
+    <div class="cart_table">
+                <p><strong style="color:#7B68EE">장바구니</strong></p>
+                
+    
+                <ul class="cart_list">
+                    
+                  <!--맨 위 전체선태그 삭제 버튼-->
+                  <li>
+                        <div class="checkbox">
+                            <input type="checkbox" name="all_chk" id="all_chk" v-model="allSelected" @click="selectAll">
+                            <label for="all_chk">전체선택</label>
+                        </div>
+                        <div class="del_btn">삭제 (<span class="num">0</span>)</div>
+                  </li>
+                    
   
-</template>
-
-<script>
-export default {
-
-}
-</script>
-
-<style>
-
-</style>
+                    <!--장바구니 리스트-->
+                  <div v-for="(cart, index) in products" :key="cart.cartnum" >
+                      <li class="cell">
+                          <!--상품 체크박스 부분-->
+                          <div class="checkbox">
+                              <input type="checkbox" :id="'check_' + cart.cartnum" 
+                              :value="cart.cartnum" v-model="cartList" :key="index" @click="select">
+                              <label :for="cart" :key="index + '1'"></label>
+                          </div>
+                          <span>
+                            {{ cart.cartnum }}
+                          </span>
+                          <!--상품 개별 설명-->
+                          <div class="item_detail">
+                              <tr>
+                                  <td class="td_width cart_info_td">
+                                      <!--상품 개당 가격,  상품 갯수, 상품 갯수에 맞는 가격 -->
+                                      <!-- <input class="productPrice" type="hidden"><span>{{ cart.price }}</span>
+                                      <input class="productQuantitiy" type="hidden"><span>{{ cart.quantity }}</span> -->
+                                      <!-- <input class="productTotalPrice" type="hidden"><span>{{ cart.price * cart.price }}</span> -->
+                                          <!-- <div class="productPrice"><span>{{ cart.price }}</span></div>
+                                          <div class="productQuantitiy"><span>{{ cart.quantity }}</span></div>
+                                          <div class="productTotalPrice"><span>{{ cart.product_price * cart.quantity }}</span></div> -->
+                                  </td>
+                              </tr>
+                              <!--상품 이미지, 상품 이름-->
+                              <img class="cart-img" :src="cart.img_url">
+                              <p class="productName"><span>{{ cart.name }}</span></p>
+                          </div>
+                          <!--상품 갯수 변경하는 버튼과 상품 갯수에 따른 가격 변동-->
+                          <div class="opt_info">
+                              
+                              <div class="price_btn">
+                                  <strong class="price_unit">{{ cart.price }}</strong>원
+                                  <input type="button" class="minus_btn" @click="minusBtn"> 
+                                  <input type="text" class="product_count"><span>{{count}}</span>
+                                  <input type="button" class="plus_btn"  @click="plusBtn">
+                                <span class="total_p">
+                                  <!-- <strong class="price_amount"><span>{{ cart.price * cart.quantity }}</span></strong>원 -->
+                                  <strong class="price_amount"><span>200</span></strong>원
+                                  <span type="button" @click="deleteBtn" class="del_li_btn"><img src="https://tictoc-web.s3.ap-northeast-2.amazonaws.com/web/img/icon/btn_del_circle.svg"></span>
+                                </span>
+                              </div>
+  
+                              
+                          </div>
+                      </li>
+                  </div> <!-- for 문 끝남 -->
+                  <span></span>
+                </ul>
+    
+                <!--밑에 결제 정보 텍스트-->
+                <div class="cart_total_area">
+                    <p>결제 정보</p>
+    
+                    <div class="cart_total_price">
+                        <p>총 상품금액 <strong class="item_price" style="color:#7B68EE">17,600</strong>원 <span class="plus_ic"></span></p>
+                        <p>총 결제금액 <strong class="total_price color-red" style="color:#7B68EE">17,600</strong>원</p>
+                    </div>
+                </div>
+    
+                <!--밑에 계속 쇼핑하기, 결제하기 버튼-->
+                <div class="btn_box">
+                    <button type="button" onclick="history.go(-1);return false;" class="btn wh-btn" style="border-color:#7B68EE">계속 쇼핑하기</button>
+                    <button type="button" onclick="order()" class="btn black-btn" style="background-color:#7B68EE">구매하기</button>
+                </div>
+              </div>
+            </div>
+        </div>
+    
+      <div class="agree"></div> <!-- 이거 지우지 마세요! -->
+  </template>
+  
+  <script>
+  import { ref } from "vue";
+  import axios from 'axios';
+  export default {
+    setup() {
+      const cart = ref("");
+      let count = ref(1);
+      const cartList = ref([]);
+      const allSelected = false;
+  
+      let total = ref(0);
+  
+      const carts = ref({
+        cartnum: 1,
+        m_id: 1,
+        p_id: 1,
+        quantity: 9,
+      });
+  
+  
+        
+  
+      const products = ref([
+        {p_id: 1, brand: '홍대주꾸미', price: 6600, name: '주꾸미 볶음', stock: 2300, delivery_type: '깜깜배송', sales_amount: 1500, img_url: 'https://img-cf.kurly.com/cdn-cgi/image/quality=85,width=400/shop/data/goods/1653034699910l0.jpeg'},
+        {p_id: 2, brand: '스윗밸런스', price: 5900, name: '오늘의 샐러드', stock: 1000, delivery_type: '깜깜배송', sales_amount: 5152, img_url: 'https://img-cf.kurly.com/cdn-cgi/image/quality=85,width=676/shop/data/goods/1655775819130l0.jpg'}
+        ,
+        {p_id: 2, brand: '스윗밸런스', price: 5900, name: '오늘의 샐러드', stock: 1000, delivery_type: '깜깜배송', sales_amount: 5152, img_url: 'https://img-cf.kurly.com/cdn-cgi/image/quality=85,width=676/shop/data/goods/1655775819130l0.jpg'}
+      ]);
+  
+      const minusBtn = () => {
+          axios.patch('/members/{id}/cart', {quantity: --count.value})
+            .then(res => {
+                  console.log(res.data)
+            })
+            .catch((error) => {
+              console.log(error);
+            });
+      };
+  
+      const plusBtn = () => {
+          axios.patch('/members/{id}/cart', {quantity: ++count.value})
+            .then(res => {
+              console.log(res.data)
+            })
+            .catch((error) => {
+              console.log(error);
+            });
+      };
+  
+      const deleteBtn = () => {
+          axios.delete('/members/{id}/cart')
+          .then(res => {
+            console.log(res.data)
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      };
+  
+      const getCartProductList = async() => {
+          await axios.get('/members/{id}/cart', {
+            })
+            .then((response) => {
+                console.log(response.data);
+                this.cartList = response.data;
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+  
+            let total = 0;
+            this.cartList.forEach((cart) => {
+              total += cart.price; // 장바구니에 담긴 제품들 모두 합친 가격
+            });
+            this.total = total;
+      };
+  
+      const selectAll = () => {
+  
+      };
+  
+      const select = () => {
+  
+      };
+  
+      
+  
+    
+  
+      return {
+        cart,
+        count,
+        carts,
+        products,
+        minusBtn,
+        plusBtn,
+        deleteBtn,
+        getCartProductList,
+  
+        cartList,
+        total,
+        allSelected,
+  
+        selectAll,
+        select,
+  
+      };
+    },
+  };
+  </script>
+  
+  <style>
+  .cart_table {
+    padding-top: 4.5rem;
+  }
+  .cart_table > p {
+    font-size: 3rem;
+    border-bottom: 2px solid #222;
+    padding: 0 0 10px 40px;
+  }
+  .cart_table .cart_list {
+    padding: 4rem;
+    font-size: 14px;
+  }
+  .cart_table .cart_list li > div {
+    display: inline-block;
+    position: relative;
+  }
+  .cart_table .cart_list li:first-of-type .del_btn {
+    float: right;
+    background: url(https://tictoc-web.s3.ap-northeast-2.amazonaws.com/web/img/icon/icon_trash.svg)
+      no-repeat 5px;
+    border: 1px solid #222;
+    margin-bottom: 1.5rem;
+    padding: 2px 5px 2px 25px;
+  }
+  .cart_table .cart_list li {
+    border-bottom: 1px solid #ccc;
+    padding: 15px 0;
+    position: relative;
+  }
+  .cart_table .cart_list li > div.item_detail span {
+    display: inline-block;
+    font-size: 20px;
+    width: 60%;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    margin-left: 100px;
+    color: #666;
+  }
+  .cart_table .cart_list li > div.item_detail .txt {
+    margin-top: 1rem;
+  }
+  
+  
+  .cart_table .cart_list li > div.opt_info {
+    position: absolute;
+    right: 0;
+    top: 34%;
+    max-width: 39%;
+    width: 300px;
+  }
+  
+  .cart_table .cart_list li > div.opt_info .price_btn input {
+    font-size: 25px;
+    margin-left: -1px;
+    cursor: pointer;
+    color: #ccc;
+    width: 30px;
+    height: 30px;
+    border: 0;
+    outline: 0;
+    display: inline-block;
+    text-align: center;
+    vertical-align: top;
+    background-size: cover !important;
+  }
+  .cart_table .cart_list li > div.opt_info .price_btn input.minus_btn {
+    background: url(https://tictoc-web.s3.ap-northeast-2.amazonaws.com/web/img/icon/btn_minus.svg)
+      no-repeat center;
+  }
+  .cart_table .cart_list li > div.opt_info .price_btn input.plus_btn {
+    background: url(https://tictoc-web.s3.ap-northeast-2.amazonaws.com/web/img/icon/btn_plus.svg)
+      no-repeat center;
+  }
+  .cart_table .cart_list li > div.opt_info .price_btn span.number {
+    padding-bottom: 20px;
+    font-size: 25px;
+    background: #f5f5f5;
+    color: #666;
+    margin: 0 5px;
+  }
+  .cart_table .cart_list li > div.opt_info > div.price_unit div.price {
+    display: inline-block;
+    padding-bottom: 20px;
+  }
+  .cart_table .cart_list li > div.opt_info > div.price_btn > span.total_p {
+    font-size: 22px;
+    /* float: right; */
+    margin-left: 20px;
+    padding-bottom: 20px;
+  }
+  .cart_table .cart_list li > div.opt_info > div.price_btn > span.total_p strong {
+    vertical-align: sub;
+    margin-right: 30px;
+    font-size: 25px;
+    padding-bottom: 20px;
+  }
+  .cart_table .cart_list li > div.opt_info > div.price_btn > span.total_p span {
+    width: 30px;
+    display: inline-block;
+    padding-bottom: 20px;
+  }
+  .cart_table .cart_list li > div.item_detail {
+    width: 60%;
+  }
+  
+  .cart_table .cart_list li > div.item_detail img {
+    max-width: 150px;
+    width: 25%;
+    margin: 0 5%;
+    float: left;
+  }
+  .cart_table .cart_total_area {
+    padding: 0 4rem;
+  }
+  .cart_table .cart_total_area > p {
+    font-size: 20px;
+  }
+  .cart_table .cart_total_area .cart_total_price {
+    border: 2px solid #707070;
+    padding: 2rem;
+    margin: 2rem auto;
+    text-align: center;
+  }
+  .cart_table .cart_total_area .cart_total_price p {
+    display: inline-block;
+    text-align: left;
+  }
+  .cart_table .cart_total_area .cart_total_price p > span {
+    width: 22px;
+    height: 22px;
+    display: inline-block;
+    vertical-align: middle;
+    margin: 0 20px;
+    background-size: cover !important;
+  }
+  .plus_ic {
+    background: url(https://tictoc-web.s3.ap-northeast-2.amazonaws.com/web/img/icon/ic_plus_sqaure.svg);
+  }
+  .equal_ic {
+    background: url(https://tictoc-web.s3.ap-northeast-2.amazonaws.com/web/img/icon/ic_equal_square.svg);
+  }
+  .cart_table .cart_total_area .cart_total_price p > strong {
+    display: inline-block;
+    margin-left: 10px;
+    margin: 0 5px 0 10px;
+    font-size: 30px;
+    vertical-align: unset;
+  }
+  .cart_table .btn_box {
+    padding: 4rem;
+    text-align: center;
+  }
+  .cart_table .btn_box .btn {
+    padding: 10px 0;
+    width: 24%;
+    margin: 0 1%;
+  }
+  .cart_table .btn_box .black-btn {
+    float: none;
+  }
+  </style>
