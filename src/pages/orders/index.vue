@@ -234,7 +234,7 @@ export default {
     const quantity = route.params.quantity;
     // const orderProducts = ref([]);
     const member = ref(
-       {id: 1, name: '홍길동', email: 'kosa@metanet.com', phone: '010-1234-5678', address: '서울', point: 20000}
+       {id: 1, name: '홍길동', email: 'kosa@metanet.com', phone: '010-1234-5678', address: '서울', point: 0}
     );
     const orderDetails = ref([
       // {id: 1, quantity: 2, 
@@ -242,7 +242,7 @@ export default {
     ]);
     const usePoint = ref(0);
     const totalPrice = ref(0);
-    const paymentAmount = ref(totalPrice.value);
+    const paymentAmount = ref();
     const toggleErrorMsg = ref(false);
     const togglePayMethod = ref('');
     const toggleDisabledPayMethod = ref(false);
@@ -293,6 +293,9 @@ export default {
           totalPrice.value = totalPrice.value + orderDetails.value[i].totalPrice;
           console.log(totalPrice.value);
         }
+        paymentAmount.value = totalPrice.value;
+
+        console.log('paymentAmount : ' + paymentAmount.value);
         //console.log(orderDetails.length);
       } catch(err) {
         console.log(err);
@@ -303,20 +306,23 @@ export default {
     getOrderPage();
 
     const doPay = async () => {
-      // const res = await axios.post('/success', {
-      //   deliveryMsg: msg.value,
-      //   p_id: ,
-      //   quantity: ,
-      //   totalPrice: totalPrice.value,
-      //   method: togglePayMethod,
-      //   payment_amount: paymentAmount.value,
-      //   usePoint: usePoint.value
-      // });
+      try{
+          const res = await axios.post('/members/5/orders/payment', {
+          deliveryMsg: msg.value,
+          p_id: 2,
+          quantity: 1,
+          totalPrice: totalPrice.value,
+          method: togglePayMethod,
+          payment_amount: paymentAmount.value,
+          usePoint: usePoint.value
+        });
+      }catch(err) {
+        console.log("err !!!!!!!!!!!! :  " + err);
+      }
       router.push({
         name: 'OrderSuccess'
       });
     }
-
 
     return {
       route,

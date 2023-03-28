@@ -9,7 +9,7 @@
                 </strong>
                 되었습니다.
             </div>
-            <router-link :to="`/orders/` + order.id" style="margin: 0; padding: 0; border: 0; box-sizing: border-box; font-size: 14px; line-: 22px; font-family: '맑은고딕', 'malgun gothic', 'dotum', sans-serif; letter-spacing: -1px; display: inline-block; min-: 135px; :40 px; margin: 19px 0 0; padding: 8px 15px 10px; border-radius: 5px; border: 0; background: #7B68EE; color: #fff; font-size: 16px; line-: 22px; letter-spacing: -1px; font-family: 'nanumbarungothicbold'; font-weight: bold; cursor: pointer; text-decoration: none; text-align: center;">
+            <router-link :to="`/orders/` + 6" style="margin: 0; padding: 0; border: 0; box-sizing: border-box; font-size: 14px; line-: 22px; font-family: '맑은고딕', 'malgun gothic', 'dotum', sans-serif; letter-spacing: -1px; display: inline-block; min-: 135px; :40 px; margin: 19px 0 0; padding: 8px 15px 10px; border-radius: 5px; border: 0; background: #7B68EE; color: #fff; font-size: 16px; line-: 22px; letter-spacing: -1px; font-family: 'nanumbarungothicbold'; font-weight: bold; cursor: pointer; text-decoration: none; text-align: center;">
                 주문내역조회
             </router-link>
         </div>
@@ -201,7 +201,7 @@
 					</strong>
 					<span
 						style="margin: 0; padding: 0; border: 0; box-sizing: border-box; font-size: 14px; line-height: 22px; font-family: '맑은고딕', 'Malgun Gothic', 'dotum', sans-serif; letter-spacing: -1px; float: right; color: #f47330; font-weight: bold; font-size: 16px; letter-spacing: 0;">
-						{{order.price}}
+						28800
 						<em
 							style="margin: 0; padding: 0; border: 0; box-sizing: border-box; font-size: 14px; line-height: 22px; font-family: '맑은고딕', 'Malgun Gothic', 'dotum', sans-serif; letter-spacing: -1px; display: inline-block; margin-left: 3px; font-style: normal; font-weight: bold; font-size: 12px; vertical-align: 2px; letter-spacing: -1px;">
 							원
@@ -286,19 +286,19 @@ import {ref} from 'vue';
 export default {
 	setup(){
 		const member = ref(
-			{id: 1, name: '홍길동', email: 'kosa@metanet.com', phone: '010-1234-5678', address: '서울', point: 20000}
+			{id: 1, name: '홍길동', email: 'kosa@metanet.com', phone: '010-1234-5678', address: '서울', point: 0}
 		);
 		const products = ref([
-			{id: 1, brand: '스윗밸런스', price: 5900, name: '오늘의 샐러드', img_url: '1655775819130l0.jpg', quantity: 2}
+			{id: 3, brand: '크리넥스', price: 28800, name: '데코앤소프트 화장지', img_url: '1637926173262l0.jpeg', quantity: 1}
 		]);
 		const order = ref(
-			{id: 1, orders_date: '2023-02-22', status: '배송완료', total_amount: 2, price: 11800, m_id: 1}
+			{id: 1, orders_date: '2023-03-27', status: '배송완료', total_amount: 2, price: 11800, m_id: 5}
 		);
 		const orderDetails = ref([
-			{o_id: 1, quantity: 2, productDTO: {id: 1, brand: '스윗밸런스', price: 5900, name: '오늘의 샐러드', img_url: '1655775819130l0.jpg', quantity: 2}}
+			{o_id: 1, quantity: 1, productDTO: {id: 3, brand: '크리넥스', price: 28800, name: '데코앤소프트 화장지', img_url: '1637926173262l0.jpeg', quantity: 1}}
 		]);
 		const payment = ref(
-			{id: 1, o_id: 1, m_id: 1, method: '카드', payment_amount: 11800}
+			{id: 1, o_id: 1, m_id: 5, method: '카드', payment_amount: 28800}
 		);
 		const usePoint = ref(0);
     	const totalPrice = ref(products.value[0].price * products.value[0].quantity);
