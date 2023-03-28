@@ -23,10 +23,34 @@
                                     <td>작성일</td>
                                 </thead>
                                  <tbody :value="review.r_id" :key="review.r_id" v-for="review in reviews">
-                                        <td>{{review.r_id}}</td>
-                                        <td>{{review.m_id}}</td>
+                                        <td>1</td>
+                                        <td>홍길동</td>
                                         <!-- <td><router-link :to="{path:'/products/review/'+review.r_id}">{{review.contents}}</router-link></td> -->
                                         <td @click="moveToReviewDetailPage(review.r_id, review.p_id)">{{review.contents.substring(0,10)}}...</td>
+                                        <td>{{review.review_date}}</td>
+                                </tbody>
+                                <tbody :value="review.r_id" :key="review.r_id" v-for="review in reviews">
+                                        <td>2</td>
+                                        <td>강길동</td>
+                                        <td>너무 부드러워요.....</td>
+                                        <td>{{review.review_date}}</td>
+                                </tbody>
+                                <tbody :value="review.r_id" :key="review.r_id" v-for="review in reviews">
+                                        <td>3</td>
+                                        <td>백길동</td>
+                                        <td>최고에요!!!!!!...</td>
+                                        <td>{{review.review_date}}</td>
+                                </tbody>
+                                 <tbody :value="review.r_id" :key="review.r_id" v-for="review in reviews">
+                                        <td>4</td>
+                                        <td>함길동</td>
+                                        <td>이 휴지 아니면 못써요!!!!!!...</td>
+                                        <td>{{review.review_date}}</td>
+                                </tbody>
+                                  <tbody :value="review.r_id" :key="review.r_id" v-for="review in reviews">
+                                        <td>5</td>
+                                        <td>재갈길동</td>
+                                        <td>휴지 추천합니다!!!!!!...</td>
                                         <td>{{review.review_date}}</td>
                                 </tbody>
                             </table>

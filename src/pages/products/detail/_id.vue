@@ -33,7 +33,9 @@
           </div>
           <div class="all-price">총 상품금액 <span> {{productDetail.price * count}} </span>원</div>
           <div class="btn">
-            <router-link :to="{name: 'CartList'}">장바구니</router-link>
+            <div>
+              <a @click="moveToCartPage">장바구니</a>
+            </div>
             <!-- <a @click.prevent="moveToOrderPage">구매하기</a> -->
             <div @click="moveToOrderPage">
               <router-link :to="{name: 'Orders', params: {p_id: productDetail.p_id, quantity: count}}">구매하기</router-link>
@@ -214,12 +216,27 @@ export default{
           });
         }
 
+        const moveToCartPage = async() => {
+        
+          try {
+            const req = await axios.post('/cart/cartAdd', {p_id: pid, quantity: count.value});
+            console.log('req : ' + req.data);
+
+            router.push({
+              name:'CartList'
+            });
+          } catch(err) {
+            console.log(err);
+          }
+        }
+
         return {
             product,
             productDetail,
             count,
             moveToProductReviewsPage,
             moveToOrderPage,
+            moveToCartPage,
         }
     }
 }

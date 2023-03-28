@@ -70,8 +70,8 @@
                     <p>결제 정보</p>
     
                     <div class="cart_total_price">
-                        <p>총 상품금액 <strong class="item_price" style="color:#7B68EE"><span>80800</span></strong>원 <span class="plus_ic"></span></p>
-                        <p>총 결제금액 <strong class="total_price color-red" style="color:#7B68EE"><span>80800</span></strong>원</p>
+                        <p>총 상품금액 <strong class="item_price" style="color:#7B68EE"><span>64000</span></strong>원 <span class="plus_ic"></span></p>
+                        <p>총 결제금액 <strong class="total_price color-red" style="color:#7B68EE"><span>64000</span></strong>원</p>
                     </div>
                 </div>
     
