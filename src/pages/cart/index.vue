@@ -103,7 +103,7 @@
 
       const minusBtn = (cart) => {
         return --cart.quantity;
-        //   axios.patch('/cart/cartUpdate', {quantity: --count})
+        //   axios.patch('/members/{m_id}/cart', {quantity: --count})
         //     .then(res => {
         //           console.log(`HYE!! :     ${res.data}`)
         //     })
@@ -114,7 +114,7 @@
   
       const plusBtn = (cart) => {
         return ++cart.quantity;
-        //   axios.patch('/members/{id}/cart', {quantity: ++count.value})
+        //   axios.patch('/members/{m_id}/cart', {quantity: ++count.value})
         //     .then(res => {
         //       console.log(res.data)
         //     })
@@ -134,7 +134,7 @@
        // console.log(`KANG33333333 ${JSON.stringify(cartList.value, null, 2)}`)
 
        
-        //   axios.delete('/cart/cartDelete')
+        //   axios.delete('/members/{m_id}/cart')
         //   .then(res => {
         //     console.log(res.data)
         //   })
@@ -145,7 +145,7 @@
   
       const getCartProductList = async() => {
         
-          await axios.get('/cart/cartList', {
+          await axios.get('/members/{m_id}/cart', {
             })
             .then((response) => {
                 cartList.value = {...response.data}
