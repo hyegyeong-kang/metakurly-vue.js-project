@@ -78,7 +78,7 @@
       </div>
         
       <div style="overflow: hidden; margin: 0 20px;"
-        v-for="detail in orderDetails" :key="detailp_id">
+        v-for="detail in orderDetails" :key="detail.p_id">
         <router-link
           style="float: left; :70 px; :70 px; margin: 20px 0;"
           :to="`/products/` + detail.p_id" id="productImg">
@@ -183,8 +183,8 @@
             </strong>
             <span
               style="margin: 0; padding: 0; border: 0; box-sizing: border-box; font-size: 14px; line-height: 22px; font-family: '맑은고딕', 'Malgun Gothic', 'dotum', sans-serif; letter-spacing: -1px; float: right; color: #f47330; font-weight: bold; font-size: 16px; letter-spacing: 0;">
-              <select name="paymentMethod" id="method" :disabled="toggleDisabledPayMethod">
-                <option id="optionId" :value="togglePayMethod">선택</option>
+              <select name="paymentMethod" id="method" :disabled="toggleDisabledPayMethod" v-model="selected">
+                <option id="optionId">선택</option>
                 <option value="카드">카드</option>
                 <option value="계좌이체">계좌이체</option>
               </select>
@@ -234,7 +234,7 @@ export default {
     const quantity = route.params.quantity;
     // const orderProducts = ref([]);
     const member = ref(
-       {id: 1, name: '홍길동', email: 'kosa@metanet.com', phone: '010-1234-5678', address: '서울', point: 20000}
+       {id: 1, name: '홍길동', email: 'kosa@metanet.com', phone: '010-1234-5678', address: '서울', point: 0}
     );
     const orderDetails = ref([
       // {id: 1, quantity: 2, 
@@ -242,15 +242,15 @@ export default {
     ]);
     const usePoint = ref(0);
     const totalPrice = ref(0);
-    const paymentAmount = ref(totalPrice.value);
+    const paymentAmount = ref();
     const toggleErrorMsg = ref(false);
-    const togglePayMethod = ref('');
+    const selected = ref('선택');
     const toggleDisabledPayMethod = ref(false);
     const msg = ref('');
  
 
     const inputPoint = () => {
-      togglePayMethod.value = '';
+      selected.value = '';
       toggleDisabledPayMethod.value = false;
       if(totalPrice.value < usePoint.value || member.value.point < usePoint.value){
         toggleErrorMsg.value = true;
@@ -261,7 +261,7 @@ export default {
         toggleErrorMsg.value = false;
         paymentAmount.value = totalPrice.value - usePoint.value;
         if(paymentAmount.value == 0){
-          togglePayMethod.value = '적립금';
+          selected.value = '적립금';
           toggleDisabledPayMethod.value = true;
         }
       }
@@ -278,7 +278,7 @@ export default {
 
     const getOrderPage = async () => {
       try{
-        const res = await axios.post('/members/16/orders', {
+        const res = await axios.post('/members/21/orders', {
             orderProductList: [
                 {
                     p_id: pid,
@@ -293,6 +293,9 @@ export default {
           totalPrice.value = totalPrice.value + orderDetails.value[i].totalPrice;
           console.log(totalPrice.value);
         }
+        paymentAmount.value = totalPrice.value;
+
+        console.log('paymentAmount : ' + paymentAmount.value);
         //console.log(orderDetails.length);
       } catch(err) {
         console.log(err);
@@ -303,15 +306,25 @@ export default {
     getOrderPage();
 
     const doPay = async () => {
-      // const res = await axios.post('/success', {
-      //   deliveryMsg: msg.value,
-      //   p_id: ,
-      //   quantity: ,
-      //   totalPrice: totalPrice.value,
-      //   method: togglePayMethod,
-      //   payment_amount: paymentAmount.value,
-      //   usePoint: usePoint.value
-      // });
+      try{
+        const res = await axios.post('/members/21/orders/payment', {
+          deliveryMsg: msg.value,
+          orderProductList: [
+            {
+              p_id: pid,
+              quantity: quantity,
+              totalPrice: totalPrice.value
+            }
+          ],
+          total_amount: quantity,
+          price: totalPrice.value,
+          method: selected.value,
+          payment_amount: paymentAmount.value,
+          usePoint: usePoint.value
+        });
+      }catch(err) {
+        console.log("err !!!!!!!!!!!! :  " + err);
+      }
       router.push({
         name: 'OrderSuccess'
       });
@@ -327,7 +340,7 @@ export default {
       paymentAmount,
       inputPoint,
       toggleErrorMsg,
-      togglePayMethod,
+      selected,
       toggleDisabledPayMethod,
       msg,
       doPay,

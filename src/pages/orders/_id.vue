@@ -58,7 +58,7 @@ export default {
     const oid = route.params.id;
 
     const member = ref(
-      {id: 1, name: '홍길동', email: 'kosa@metanet.com', phone: '010-1234-5678', address: '서울', point: 20000}
+      {id: 1, name: '홍길동', email: 'kosa@metanet.com', phone: '010-1234-5678', address: '서울', point: 0}
     );
     const order = ref(
 			// {id: 1, orders_date: '2023-02-22', status: '배송완료', total_amount: 2, price: 11800, m_id: 1}
@@ -82,7 +82,7 @@ export default {
 
     const cancelOrder = async (oid) => {
       try{
-        const res = await axios.patch('/members/16/orders/' + oid);
+        const res = await axios.patch('/members/21/orders/' + oid);
         cancellable.value = false;
         console.log(res);
         router.go();
@@ -93,7 +93,7 @@ export default {
 
     const getOrderDetailList = async () => {
       try{
-        const res = await axios.get('/members/16/orders/' + oid);
+        const res = await axios.get('/members/21/orders/' + oid);
         order.value = {...res.data.order};
         payment.value = {...res.data.payment};
         console.log(res);

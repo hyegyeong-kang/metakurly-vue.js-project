@@ -53,7 +53,7 @@ export default {
 
 	const getOrderList = async () => {
 		try{
-			const res = await axios.get('/members/16/orders');
+			const res = await axios.get('/members/1/orders');
 			orders.value = {...res.data};
 			console.log(res);
 		} catch(err){
